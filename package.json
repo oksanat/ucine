@@ -1,0 +1,21 @@
+{
+    "name": "uCine",
+    "main": "app.js",
+    "description": "Film Locations in San Francisco.",
+    "version": "0.0.1",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/oksanat/ucine.git"
+    },
+    "scripts": {
+        "start": "node app.js"
+    },
+    "license": "Unlicense",
+    "dependencies" : {
+        "express" : "~4.14.0",
+        "mongodb" : "~2.2.11",
+        "underscore": "~1.8.3",
+        "pug": "2.0.0-beta6"
+
+    }
+}

@@ -1,13 +1,23 @@
-var Page = function () {
+var config = require("../../config")();
+
+module.exports = function() {
+    this.title = null;
+    this.header = null;
+    this.content = null;
+    this.apiKey = config.maps.apiKey;
 };
 
-Page.prototype = Object.create({}, {
-    title: {
-        get: function () {
-            return "Put yourself in the picture";
-        },
-        set: function () {
+module.exports.prototype = {
+    setTitle: function(title) {
+        this.title = title;
+    },
+    getTitle: function() {
+        return this.title;
+    },
+    setHeader: function(header) {
+        this.header = header;
+    },
+    getHeader: function() {
+        return this.header;
     }
-});
-
-module.exports = Page;
+}

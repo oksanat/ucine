@@ -11,7 +11,7 @@ module.exports.prototype = {
         return Child;
     },
 
-    setDB: function(db) {
+    setDb: function(db) {
         this.db = db;
     },
 

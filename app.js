@@ -6,17 +6,20 @@ var express = require("express"),
     path = require("path"),
     config = require("./config")(),
     app = express(),
+    favicon = require("serve-favicon");
     Home = require("./src/controllers/Home"),
     MongoClient = require("mongodb").MongoClient;
 
 app.set("views", __dirname + "/src/templates");
 app.set("view engine", "pug");
 app.use(express.static(path.join(__dirname, "public")));
+app.use(favicon(path.join(__dirname, "public", "images", "favicon.ico")));
 
 MongoClient.connect("mongodb://" + config.mongo.host + ":" + config.mongo.port + "/ucine", function(err, db) {
     if (err) {
-        console.log("Sorry, there is no mongo db server running.");
+        console.error("Failed to connect to mongodb due to ", err);
     } else {
+
         var attachDb = function(req, res, next) {
             req.db = db;
             next();

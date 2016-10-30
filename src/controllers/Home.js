@@ -5,15 +5,15 @@ var BaseController = require("./Base"),
 
 module.exports = BaseController.extend({
     name: "Home",
-    content: null,
-    title: "Put yourself in the picture",
 
     run: function(req, res, next) {
-        movieModel.setDB(req.db);
+        movieModel.setDb(req.db);
+        pageModel.setTitle("Put yourself in the picture");
+        pageModel.setHeader("Film Locations: San Francisco");
+
         var self = this;
         this.getContent(function() {
             var v = new View(res, "index");
-            console.log(pageModel.title);
             v.render(pageModel);
         })
     },

@@ -21,7 +21,12 @@
             // Create a new map and place in the index.html page
             var map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 3,
-                center: new google.maps.LatLng(defaultLocation.lat, defaultLocation.long)
+                center: new google.maps.LatLng(defaultLocation.lat, defaultLocation.long),
+                mapTypeControl: true,
+                mapTypeControlOptions: {
+                    style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                    position: google.maps.ControlPosition.BOTTOM_RIGHT
+                }
             });
         }
 

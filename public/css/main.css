@@ -2,63 +2,24 @@ html, body{
     height: 100%;
     width: 100%;
 }
-#map {
-    height: 90%;
-    width: 100%;
-    margin-bottom: 20px;
+
+.md-button.md-accent.md-fab {
+    padding-top: 5px;
+    margin-top: 16px;
 }
-#wrapper {
-    min-height: 100%;
+.main {
+    height: 85%;
+}
+.map {
     height: 100%;
     width: 100%;
     position: absolute;
     display: inline-block;
-}
-#map-wrapper {
-    height: 100%;
     overflow-y: auto;
-    padding-left: 0px;
-    transition: all .5s linear;
-    -moz-transition: all .5s linear;
-    -webkit-transition: all .5s linear;
-    -o-transition: all .5s linear;
 }
 .footer {
     position: absolute;
-    bottom: 15px;
     text-align: center;
     width: 100%;
 }
 
-.sidebar {
-    position : absolute;
-    left : -160px;
-    padding-top: 100px;
-    transition : 100ms left;
-}
-
-#navigation-toggle {
-        position : absolute;
-        left : 160px;
-        background : rgba(3,159,244,.95);
-        color : white;
-        text-decoration : none;
-        padding : 20px;
-}
-.show {
-    left : 0;
-}
-.navigation {
-    list-style : none;
-    padding : 0;
-    margin : 0;
-}
-.navigation-items a {
-    display : block;
-    color : white;
-    line-height : 2em;
-    text-decoration : none;
-    padding : 10px 30px;
-    width : 100px;
-
-}

@@ -1,42 +1,35 @@
 doctype
-html(ng-app="App")
+html
     include ./header.pug
-    body(ng-app="App")
+    body(ng-app="App" md-theme="ucine")
 
-    div#header(class="navbar navbar-default navbar-fixed-top")
-        div(class="navbar-header")
-            span(class="navbar-brand")= header
+        md-toolbar(ng-controller="ToolbarController" class="md-primary")
+            div(class="md-toolbar-tools")
+                i(class="material-icons") theaters
+                h2(class="md-flex")= header
+                span(flex)
+                md-button(class="md-icon-button" aria-label="Source code" ng-click="openSource('"+gitRepo+"')")
+                    i(class="material-icons") code
 
-    div#wrapper(ng-controller="SidebarController")
-        div#map-wrapper(class="col-md-12")
-            div#map
+        div(ng-controller="MenuController" layout="column" class="main" ng-cloak)
 
-    include ./footer.pug
+            section(layout="row" flex)
+                md-content(flex)
 
-    <div class="container">
-        <div ng-controller="SidebarController">
-            <div class="sidebar" sidebar-directive="state">
-                <a href="#" id="navigation-toggle" ng-click="toggleState()">Navigation</a>
-                <form name ="addForm" novalidate>
-                    <!-- Text Boxes and Other User Inputs. Note ng-model binds the values to Angular $scope -->
-                    <div class="form-group">
-                        <label for="username">Username <span class="badge">All fields required</span></label>
-                        <input type="text" class="form-control" id="username" placeholder="OldandGold" ng-model="formData.username" required>
-                    </div>
-                    <label class="radio control-label">Gender</label>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="optionsRadios" id="radiomale" value="Male" ng-model="formData.gender">
-                            Male
-                        </label>
-                    </div>
-                    <div class="radio" required>
-                        <label>
-                            <input type="radio" name="optionsRadios" id="radiofemale" value="Female" ng-model="formData.gender">
-                            Female
-                        </label>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+                    div(layout="column" layout-align="top")
+                        div#map(class="map")
+
+                        md-button(ng-click="toggleSidenav()" ng-hide="isOpen()" class="md-accent md-fab")
+                            i(class="material-icons md-48") menu
+
+                md-sidenav(class="md-sidenav-right md-whiteframe-4dp" md-component-id="sideNav")
+                    md-toolbar(class="md-theme-light")
+                        h1(class="md-toolbar-tools") Sidenav Right
+                    md-content(ng-controller="SideController" layout-padding)
+                        form
+                            md-input-container
+                                label(for="testInput") Test input
+                                input#testInput(type="text" ng-model="data" md-autofocus)
+                        md-button(ng-click="close()" class="md-primary") Close Sidenav Right
+
+        include ./footer.pug

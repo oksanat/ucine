@@ -5,6 +5,7 @@ module.exports = function() {
     this.header = null;
     this.content = null;
     this.apiKey = config.maps.apiKey;
+    this.gitRepo = config.gitRepo;
 };
 
 module.exports.prototype = {

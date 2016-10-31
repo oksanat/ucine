@@ -2,15 +2,17 @@
   "use strict";
 
   angular
-    .module("App", ["SidebarController", "MapService"])
+    .module("App", ["MenuController", "ToolbarController", "MapService", "ngMaterial"])
+    .config(config)
     .run(run);
+
+    function config($mdThemingProvider) {
+        $mdThemingProvider.theme("ucine")
+            .primaryPalette("blue");
+    }
 
     function run(MapService) {
         MapService.Initialize();
-        document.addEventListener("keyup", function(e) {
-            if (e.keyCode === 27)
-                $rootScope.$broadcast("escapePressed", e.target);
-        });
     }
 
 })(window.angular);

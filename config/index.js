@@ -8,7 +8,8 @@ var config = {
         },
         maps: {
             apiKey: "AIzaSyC-UEOxfXC1vjgxXrxM63Mvmi2ZW97801k"
-        }
+        },
+        gitRepo: "https://github.com/oksanat/ucine"
     }
 }
 module.exports = function(mode) {

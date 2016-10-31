@@ -8,26 +8,40 @@
     function Service($rootScope, $http) {
         var service = {};
 
-        // Default location
-        var defaultLocation = {
-            lat: 39.50,
-            long: -98.35
-        }
+        service.initialize = initialize;
+        service.refresh = refresh;
 
-        service.Initialize = Initialize;
         return service;
 
-        function Initialize() {
-            // Create a new map and place in the index.html page
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 3,
-                center: new google.maps.LatLng(defaultLocation.lat, defaultLocation.long),
-                mapTypeControl: true,
-                mapTypeControlOptions: {
-                    style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-                    position: google.maps.ControlPosition.BOTTOM_RIGHT
-                }
-            });
+        function initialize(position) {
+            if (!angular.isDefined(position)) {
+                position = {
+                    coords: {
+                        latitude: 37.773972,
+                        longitude: -122.431297
+                    }
+                };
+            }
+            var initLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+                mapOptions = {
+                    zoom: 15,
+                    center: initLatLng,
+                    mapTypeControl: true,
+                    mapTypeControlOptions: {
+                        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                        position: google.maps.ControlPosition.BOTTOM_RIGHT
+                    }
+                },
+                map = new google.maps.Map(document.getElementById('map'), mapOptions),
+                marker = new google.maps.Marker({
+                    position: initLatLng,
+                    title: "Hello World!"
+                });
+            marker.setMap(map);
+        }
+
+        function refresh(position) {
+            initialize(position);
         }
 
     }

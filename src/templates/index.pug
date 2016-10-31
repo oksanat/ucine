@@ -9,6 +9,7 @@ html
                 h2(class="md-flex")= header
                 span(flex)
                 md-button(class="md-icon-button" aria-label="Source code" ng-click="openSource('"+gitRepo+"')")
+                    md-tooltip(md-direction="left") View Source
                     i(class="material-icons") code
 
         div(ng-controller="MenuController" layout="column" class="main" ng-cloak)

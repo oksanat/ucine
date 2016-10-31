@@ -2,7 +2,7 @@
   "use strict";
 
   angular
-    .module("App", ["MenuController", "ToolbarController", "MapService", "ngMaterial"])
+    .module("App", ["MenuController", "ToolbarController", "MapService", "GeoLocationService", "ngMaterial"])
     .config(config)
     .run(run);
 
@@ -11,8 +11,13 @@
             .primaryPalette("blue");
     }
 
-    function run(MapService) {
-        MapService.Initialize();
+    function run(MapService, GeoLocationService) {
+
+        GeoLocationService.getCurrentPosition()
+            .then(function(position) {
+                console.log(position);
+                MapService.refresh(position);
+            });
     }
 
 })(window.angular);

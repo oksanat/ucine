@@ -15,6 +15,7 @@
             var deferred = $q.defer();
 
             if (!$window.navigator.geolocation) {
+                console.log("Geolocation is not supported.");
                 deferred.reject("Geolocation is not supported.");
             } else {
                 $window.navigator.geolocation.getCurrentPosition(
@@ -22,6 +23,7 @@
                         deferred.resolve(position);
                     },
                     function (err) {
+                        console.log("Err: ", err);
                         deferred.reject(err);
                     });
             }

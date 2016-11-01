@@ -2,7 +2,7 @@
   "use strict";
 
   angular
-    .module("App", ["MenuController", "ToolbarController", "MovieModel", "MapService", "GeoLocationService", "ngMaterial"])
+    .module("App", ["MenuController", "ToolbarController", "MapService", "GeoLocationService", "ngMaterial"])
     .config(config)
     .run(run);
 
@@ -19,7 +19,6 @@
                 longitude: -122.431297
             }
         };
-
         GeoLocationService.getCurrentPosition()
             .then(function(position) {
                 console.debug("Obtained position", position);

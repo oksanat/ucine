@@ -61,7 +61,7 @@
             movies.forEach(function(movie) {
                 movie.getGeoLocation()
                     .then(function(data) {
-                        if (angular.isDefined(data)){
+                        if (!angular.isDefined(data)){
                             throw "Empty location data";
                         }
                         map.setCenter(data[0].geometry.location);

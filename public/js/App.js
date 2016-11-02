@@ -6,9 +6,14 @@
     .config(config)
     .run(run);
 
-    function config($mdThemingProvider) {
+    function config($mdThemingProvider, $httpProvider) {
         $mdThemingProvider.theme("ucine")
             .primaryPalette("blue");
+        // Enable http caching
+        $httpProvider.defaults.cache = true;
+        $httpProvider.defaults.headers.get = {
+            "Accept": "application/json"
+        };
     }
 
     function run(MapService, GeoLocationService) {

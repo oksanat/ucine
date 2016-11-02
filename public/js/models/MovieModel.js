@@ -5,7 +5,7 @@
         .module("MovieModel", [])
         .factory("MovieModel", Model);
 
-    function Model ($q) {
+    function Model ($http, $q) {
 
         function Movie(data) {
             this.setData(data);
@@ -24,26 +24,29 @@
                 this.title = angular.isDefined(data.title) ? data.title : null;
             },
 
-            getGeoLocation: function() {
-                var geocoder = new google.maps.Geocoder(),
-                    deferred = $q.defer();
-
-                geocoder.geocode({"address": this.locations},
-                    function (position, status) {
-                        if (status == google.maps.GeocoderStatus.OK) {
-                            deferred.resolve(position);
-                        } else {
-                            console.log("Failed to obtain movie location coordinates due to: ", status);
-                            deferred.reject(status);
+            loadGeocode: function(address) {
+                // Perform an AJAX call to get all of the records in the db.
+                var deferred = $q.defer(),
+                    url = "http://127.0.0.1:8080/geocodes",
+                    config = {
+                        params: {
+                            address: address
                         }
-                    },
-                    function (error) {
-                        console.log("Failed to obtain movie location coordinates due to: ", error);
-                        deferred.reject(err);
+                    };
+
+                $http
+                    .get(url, config)
+                    .success(function(response) {
+                        console.log(response);
+                        deferred.resolve(response);
+                    })
+                    .error(function(error) {
+                        deferred.reject(error);
                     });
 
                 return deferred.promise;
             }
+
         };
         return Movie;
     }

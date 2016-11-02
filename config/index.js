@@ -7,7 +7,10 @@ var config = {
             port: 27017
         },
         maps: {
-            apiKey: "AIzaSyC-UEOxfXC1vjgxXrxM63Mvmi2ZW97801k"
+            apiKey: "AIzaSyC-UEOxfXC1vjgxXrxM63Mvmi2ZW97801k",
+            provider: "google",
+            httpAdapter: "https",
+            formatter: null
         },
         gitRepo: "https://github.com/oksanat/ucine"
     }

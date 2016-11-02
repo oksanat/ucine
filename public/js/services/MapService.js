@@ -43,16 +43,17 @@
             MovieService.getMovies()
                 .then(function(movies) {
                     movies.forEach(function(movie) {
-                        movie.getGeoLocation()
+                        movie.loadGeocode(movie.locations)
                             .then(function(data) {
-                                map.setCenter(data[0].geometry.location);
+                                var latLng = new google.maps.LatLng(data.latitude, data.longitude);
+                                map.setCenter(latLng);
                                 marker = new google.maps.Marker({
                                     map: map,
-                                    position: data[0].geometry.location
+                                    position: latLng
                                 });
                             })
                             .catch(function(error) {
-                                console.info("Failed to obtain current position, skipping");
+                                console.info("Failed to obtain movie geolocation, skipping");
                             });
                     });
                 })

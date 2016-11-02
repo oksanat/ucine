@@ -16,6 +16,7 @@
         "mongodb" : "~2.2.11",
         "underscore": "~1.8.3",
         "pug": "2.0.0-beta6",
-        "serve-favicon": "~2.3.0"
+        "serve-favicon": "~2.3.0",
+        "node-geocoder": "~3.14.0"
     }
 }

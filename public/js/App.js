@@ -2,7 +2,7 @@
   "use strict";
 
   angular
-    .module("App", ["MenuController", "ToolbarController", "MapService", "GeoLocationService", "ngMaterial"])
+    .module("App", ["MenuController", "ToolbarController", "MapService", "MovieService", "GeoLocationService", "ngMaterial"])
     .config(config)
     .run(run);
 

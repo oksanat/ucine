@@ -11,7 +11,7 @@ var express = require("express"),
     Geocode = require("./src/controllers/Geocode"),
     MongoClient = require("mongodb").MongoClient;
 
-app.set("views", __dirname + "/src/templates");
+app.set("views", __dirname + "/src/data");
 app.set("view engine", "pug");
 app.use(express.static(path.join(__dirname, "public")));
 app.use(favicon(path.join(__dirname, "public", "images", "favicon.ico")));

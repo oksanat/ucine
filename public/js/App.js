@@ -2,9 +2,9 @@
   "use strict";
 
   angular
-    .module("App", ["MenuController", "ToolbarController", "MapService", "MovieService", "GeoLocationService", "ngMaterial"])
+    .module("App", ["MapController", "MenuController", "ToolbarController", "MapService", "MovieService", "GeoLocationService", "ngMaterial"])
     .config(config)
-    .run(run);
+    .run(run)
 
     function config($mdThemingProvider, $httpProvider) {
         $mdThemingProvider.theme("ucine")
@@ -16,24 +16,10 @@
         };
     }
 
-    function run(MapService, GeoLocationService) {
-
-        var position = {
-            coords: {
-                latitude: 37.773972,
-                longitude: -122.431297
-            }
+    function run() {
+        String.prototype.capitalize = function() {
+            return this.charAt(0).toUpperCase() + this.slice(1);
         };
-        GeoLocationService.getCurrentPosition()
-            .then(function(position) {
-                console.debug("Obtained position", position);
-            })
-            .catch(function(error) {
-                console.info("Failed to obtain current position, using default");
-            })
-            .finally(function() {
-                MapService.refresh(position);
-            });
     }
 
 })(window.angular);

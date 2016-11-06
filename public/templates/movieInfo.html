@@ -1,0 +1,15 @@
+<div class="movieInfoOverlay">
+    <div>
+        <h3>{{movie.title}} ({{movie.release_year}})</h3>
+    </div>
+    <div class="content">
+        <div ng-if="movie.actors"><b>Actors</b>:</b> {{movie.actors}}</div>
+        <div ng-if="movie.director"><b>Director:</b> {{movie.director}}</div>
+        <div ng-if="movie.production_company"><b>Production Company:</b> {{movie.production_company}}</div>
+        <div ng-if="movie.fun_facts"><b>Fun Facts:</b> {{movie.fun_facts}}</div>
+    </div>
+
+    <md-button ng-click="toggleStreetView()" class="md-fab md-mini md-primary" aria-label="Street View">
+        <i class="material-icons">streetview</i>
+    </md-button>
+</div>

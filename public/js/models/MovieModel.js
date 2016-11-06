@@ -13,15 +13,21 @@
 
         Movie.prototype = {
             setData: function(data) {
-                this.actor_1 = angular.isDefined(data.actor_1) ? data.actor_1 : null;
-                this.actor_2 = angular.isDefined(data.actor_2) ? data.actor_2 : null;
-                this.actor_3 = angular.isDefined(data.actor_3) ? data.actor_3 : null;
+                this.actors = this.getActors(data);
                 this.director = angular.isDefined(data.director) ? data.director : null;
                 this.fun_facts = angular.isDefined(data.fun_facts) ? data.fun_facts : null;
                 this.locations = angular.isDefined(data.locations) ? data.locations + ", San Francisco" : null;
                 this.production_company = angular.isDefined(data.production_company) ? data.production_company : null;
                 this.release_year = angular.isDefined(data.release_year) ? data.release_year : null;
                 this.title = angular.isDefined(data.title) ? data.title : null;
+            },
+
+            getActors: function (data) {
+                return [data.actor_1, data.actor_2, data.actor_3].filter(function (val) {return val;}).join(', ');
+            },
+
+            setGeoLocation: function (geolocation) {
+                this.geolocation = geolocation;
             },
 
             loadGeocode: function(address) {
@@ -37,7 +43,6 @@
                 $http
                     .get(url, config)
                     .success(function(response) {
-                        console.log(response);
                         deferred.resolve(response);
                     })
                     .error(function(error) {

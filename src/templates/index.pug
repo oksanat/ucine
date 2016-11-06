@@ -18,12 +18,12 @@ html
                 md-content(flex)
 
                     div(layout="column" layout-align="top")
-                        div#map(class="map")
+                        div#map(class="map" ng-controller="MapController")
 
-                        md-button(ng-click="toggleSidenav()" ng-hide="isOpen()" class="md-accent md-fab")
+                        md-button(ng-click="toggleSidenav()" ng-hide="isOpen()" class="md-fab md-accent")
                             i(class="material-icons md-48") menu
 
-                md-sidenav(class="md-sidenav-right md-whiteframe-4dp" md-component-id="sideNav")
+                md-sidenav(class="md-sidenav-right md-whiteframe-4dp" md-component-id="sideNav" id="sideNav")
                     md-toolbar(class="md-theme-light")
                         h1(class="md-toolbar-tools") Sidenav Right
                     md-content(ng-controller="SideController" layout-padding)
@@ -32,5 +32,6 @@ html
                                 label(for="testInput") Test input
                                 input#testInput(type="text" ng-model="data" md-autofocus)
                         md-button(ng-click="close()" class="md-primary") Close Sidenav Right
+                        md-button(ng-click="lucky()" class="md-primary") I'm Feeling Lucky
 
         include ./footer.pug

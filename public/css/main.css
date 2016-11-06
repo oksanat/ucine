@@ -3,9 +3,12 @@ html, body{
     width: 100%;
 }
 
-.md-button.md-accent.md-fab {
+.md-button.md-fab.md-accent {
     padding-top: 5px;
     margin-top: 16px;
+}
+.md-button.md-fab.md-mini.md-primary {
+    padding-top: 8px;
 }
 .main {
     height: 85%;
@@ -21,5 +24,8 @@ html, body{
     position: absolute;
     text-align: center;
     width: 100%;
+}
+.movieInfoOverlay .content {
+    margin-bottom: 16px;
 }
 

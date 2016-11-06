@@ -21,20 +21,17 @@ module.exports = BaseController.extend({
                     .then(function(data) {
                         var location = {
                             address: req.query.address,
-                            formattedAddress: data.formattedAddress,
-                            latitude: data.latitude,
-                            longitude: data.longitude
+                            formattedAddress: data[0].formattedAddress,
+                            latitude: data[0].latitude,
+                            longitude: data[0].longitude
                         };
                         self.insertLocation(location, function() {});
                         res.json(location);
-
-                        console.log("new", location);
                     })
                     .catch(function(err) {
                         console.log(err);
                     });
             } else {
-                console.log("from db", self.content);
                 res.json(self.content);
             }
         });

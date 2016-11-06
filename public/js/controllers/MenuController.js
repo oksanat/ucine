@@ -2,35 +2,17 @@
     "use strict";
 
     angular
-        .module("MenuController", ["ngMaterial"])
+        .module("MenuController", ["ngMaterial", "MapService", "GeoLocationService"])
         .controller("MenuController", Controller)
         .controller("SideController", SideController);
 
-    function Controller($scope, $timeout, $mdSidenav, $log) {
+    function Controller($scope, $timeout, $mdSidenav) {
         var sideNavId = "sideNav";
         $scope.toggleSidenav = buildToggler(sideNavId);
 
         $scope.isOpen = function() {
             return $mdSidenav("sideNav").isOpen();
         };
-
-        /**
-        * Supplies a function that will continue to operate until the
-        * time is up.
-        */
-        function debounce(func, wait, context) {
-            var timer;
-
-            return function debounced() {
-                var context = $scope,
-                    args = Array.prototype.slice.call(arguments);
-                $timeout.cancel(timer);
-                timer = $timeout(function() {
-                    timer = undefined;
-                    func.apply(context, args);
-                }, wait || 10);
-            };
-        }
 
         function buildToggler(sideNavId) {
             return function() {
@@ -39,9 +21,20 @@
         }
     }
 
-    function SideController($scope, $mdSidenav) {
+    function SideController($scope, $mdSidenav, $mdDialog) {
         $scope.close = function () {
             $mdSidenav("sideNav").close();
+        };
+        $scope.lucky = function () {
+            $mdDialog.show(
+                $mdDialog.alert()
+                    .parent(angular.element(document.querySelector('#map')))
+                    .clickOutsideToClose(true)
+                    .title("This is an alert title")
+                    .textContent("You can specify some description text in here.")
+                    .ariaLabel("Alert Dialog Demo")
+                    .ok("Got it!")
+            );
         };
     }
 

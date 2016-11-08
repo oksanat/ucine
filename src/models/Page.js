@@ -5,6 +5,7 @@ module.exports = function() {
     this.header = null;
     this.subHeader = null;
     this.content = null;
+    this.menuTooltip = null;
     this.apiKey = config.maps.apiKey;
     this.gitRepo = config.gitRepo;
 };
@@ -27,5 +28,11 @@ module.exports.prototype = {
     },
     getSubHeader: function() {
         return this.subHeader;
+    },
+    setMenuTooltip: function(menuTooltip) {
+        this.menuTooltip = menuTooltip;
+    },
+    getMenuTooltip: function() {
+        return this.menuTooltip;
     }
 }

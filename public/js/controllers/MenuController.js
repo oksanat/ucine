@@ -26,7 +26,7 @@
     }
 
     function SideController($scope, $mdSidenav, $mdDialog, GeoLocationService) {
-        $scope.lucky = function () {
+        $scope.findNearMe = function () {
 
             GeoLocationService.getCurrentPosition()
                 .then(function(position) {
@@ -41,7 +41,7 @@
                              .title("Ooops...")
                              .textContent("Location information is unavailable.")
                              .ariaLabel("Location information is unavailable.")
-                             .ok("Got it!")
+                             .ok("Ok")
                      );
 
                  });

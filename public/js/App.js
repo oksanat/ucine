@@ -16,6 +16,7 @@
     function config($mdThemingProvider, $httpProvider) {
         $mdThemingProvider.theme("ucine")
             .primaryPalette("blue");
+        $mdThemingProvider.setDefaultTheme("ucine");
         // Enable http caching
         $httpProvider.defaults.cache = true;
         $httpProvider.defaults.headers.get = {

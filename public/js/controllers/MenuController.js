@@ -14,6 +14,10 @@
             return $mdSidenav("sideNav").isOpen();
         };
 
+        $scope.close = function () {
+            $mdSidenav("sideNav").close();
+        };
+
         function buildToggler(sideNavId) {
             return function() {
                 $mdSidenav(sideNavId).toggle();
@@ -21,20 +25,27 @@
         }
     }
 
-    function SideController($scope, $mdSidenav, $mdDialog) {
-        $scope.close = function () {
-            $mdSidenav("sideNav").close();
-        };
+    function SideController($scope, $mdSidenav, $mdDialog, GeoLocationService) {
         $scope.lucky = function () {
-            $mdDialog.show(
-                $mdDialog.alert()
-                    .parent(angular.element(document.querySelector('#map')))
-                    .clickOutsideToClose(true)
-                    .title("This is an alert title")
-                    .textContent("You can specify some description text in here.")
-                    .ariaLabel("Alert Dialog Demo")
-                    .ok("Got it!")
-            );
+
+            GeoLocationService.getCurrentPosition()
+                .then(function(position) {
+                    console.debug("Obtained position", position);
+                 })
+                 .catch(function(error) {
+                    console.info("Failed to obtain current position, using default");
+                     $mdDialog.show(
+                         $mdDialog.alert()
+                             .parent(angular.element(document.querySelector('#map')))
+                             .clickOutsideToClose(true)
+                             .title("Ooops...")
+                             .textContent("Location information is unavailable.")
+                             .ariaLabel("Location information is unavailable.")
+                             .ok("Got it!")
+                     );
+
+                 });
+
         };
     }
 

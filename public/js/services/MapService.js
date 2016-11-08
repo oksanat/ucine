@@ -5,21 +5,22 @@
         .module("MapService", ["MovieModel", "MovieService"])
         .factory("MapService", Service);
 
-    function Service($rootScope, $http, $compile, MovieModel, MovieService) {
+    function Service($rootScope, $http, $compile, __env, MovieModel, MovieService) {
         var service = {},
+            config = __env.maps,
             map,
-            panorama;
-
-        service.initialize = initialize;
+            panorama,
+            infowindow;
         service.refresh = refresh;
         service.toggleStreetView = toggleStreetView;
 
         return service;
 
-        function initialize(position) {
-            var initLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+        function initialize() {
+            var position = config.position,
+                initLatLng = new google.maps.LatLng(position.lat, position.lng),
                 mapOptions = {
-                    zoom: 14,
+                    zoom: config.zoom,
                     center: initLatLng,
                     mapTypeControl: true,
                     mapTypeControlOptions: {
@@ -32,7 +33,8 @@
                     title: "San Francisco"
                 });
 
-            map = new google.maps.Map(document.getElementById('map'), mapOptions),
+            map = new google.maps.Map(document.getElementById("map"), mapOptions);
+            infowindow = new google.maps.InfoWindow();
             marker.setMap(map);
 
             // Default panorama and set up some defaults.
@@ -44,20 +46,22 @@
             });
         }
 
-        function refresh(scope, position) {
-            initialize(position);
-            addMarkers(scope);
+        function refresh(scope) {
+            if (angular.isNullOrUndefined(map)) {
+                initialize();
+            }
+            addCurrentYearMovies(scope);
         }
 
-        function addMarkers(scope) {
+        function addCurrentYearMovies(scope) {
 
             var prepareContent = function (movie) {
-                scope.movie = movie;
-                return ($compile("<movie-info info=movie></movie-info>")(scope)[0]);
-            };
+                    scope.movie = movie;
+                    return ($compile("<movie-info info=movie></movie-info>")(scope)[0]);
+                },
+                limit = config.limit;
 
-            var infowindow = new google.maps.InfoWindow();
-            MovieService.getMovies()
+            MovieService.getCurrentYearMovies()
                 .then(function(movies) {
                     movies.forEach(function(movie) {
                         movie.loadGeocode(movie.locations)
@@ -69,7 +73,6 @@
                                         title: movie.title + " (" + movie.release_year + ")"
                                     });
                                 movie.setGeoLocation(geolocation);
-                                map.setCenter(latLng);
                                 google.maps.event.addListener(marker, "click", function (marker, movie, infowindow){
                                     return function() {
                                         infowindow.setContent(prepareContent(movie));
@@ -85,6 +88,7 @@
                 .catch(function(error) {
                     console.info("Failed to parse movie data due to: ", error);
                 });
+
         }
         
         function toggleStreetView(geolocation) {

@@ -2,7 +2,7 @@ var config = {
     dev: {
         env: "dev",
         port: 8080,
-        mongo: {
+        mongodb: {
             host: "127.0.0.1",
             port: 27017
         },
@@ -11,8 +11,7 @@ var config = {
             provider: "google",
             httpAdapter: "https",
             formatter: null
-        },
-        gitRepo: "https://github.com/oksanat/ucine"
+        }
     }
 }
 module.exports = function(mode) {

@@ -5,11 +5,22 @@
     <div class="content">
         <div ng-if="movie.actors"><b>Actors</b>:</b> {{movie.actors}}</div>
         <div ng-if="movie.director"><b>Director:</b> {{movie.director}}</div>
-        <div ng-if="movie.production_company"><b>Production Company:</b> {{movie.production_company}}</div>
         <div ng-if="movie.fun_facts"><b>Fun Facts:</b> {{movie.fun_facts}}</div>
+        <div ng-if="movie.locations"><b>Location:</b> {{movie.locations}}</div>
+        <div ng-if="movie.plot"><b>Plot:</b> {{movie.plot | limitTo: 100}} ...</div>
     </div>
 
     <md-button ng-click="toggleStreetView()" class="md-fab md-mini md-primary" aria-label="Street View">
+        <md-tooltip md-direction="top">Street View</md-tooltip>
         <i class="material-icons">streetview</i>
     </md-button>
+    <md-button ng-if="movie.imdburl" ng-click="openImdb()" class="md-fab md-mini md-primary" aria-label="IMDb">
+        <md-tooltip md-direction="top">IMDb</md-tooltip>
+        <i class="material-icons">movie</i>
+    </md-button>
+    <md-button ng-if="movie.poster" ng-click="openPoster()" class="md-fab md-mini md-primary" aria-label="Poster">
+        <md-tooltip md-direction="top">Poster</md-tooltip>
+        <i class="material-icons">photo</i>
+    </md-button>
+
 </div>

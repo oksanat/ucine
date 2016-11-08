@@ -3,6 +3,7 @@ var config = require("../../config")();
 module.exports = function() {
     this.title = null;
     this.header = null;
+    this.subHeader = null;
     this.content = null;
     this.apiKey = config.maps.apiKey;
     this.gitRepo = config.gitRepo;
@@ -20,5 +21,11 @@ module.exports.prototype = {
     },
     getHeader: function() {
         return this.header;
+    },
+    setSubHeader: function(subHeader) {
+        this.subHeader = subHeader;
+    },
+    getSubHeader: function() {
+        return this.subHeader;
     }
 }

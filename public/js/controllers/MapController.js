@@ -2,31 +2,17 @@
     "use strict";
 
     angular
-        .module("MapController", ["MapService", "GeoLocationService"])
+        .module("MapController", ["MapService"])
         .controller("MapController", Controller)
         .directive("movieInfo", Directive)
 
-    function Controller($scope, GeoLocationService, MapService) {
-        var position = {
-            coords: {
-                latitude: 37.773972,
-                longitude: -122.431297
-            }
-        };
-        GeoLocationService.getCurrentPosition()
-            .then(function(position) {
-                console.debug("Obtained position", position);
-            })
-            .catch(function(error) {
-                console.info("Failed to obtain current position, using default");
-            })
-            .finally(function() {
-                MapService.refresh($scope, position);
-            });
-
+    function Controller($scope, MapService) {
+        angular.element(document).ready(function () {
+            MapService.refresh($scope);
+        });
     }
 
-    function Directive(MapService) {
+    function Directive($window, MapService) {
         return {
             restrict: "E",
             scope: {
@@ -35,6 +21,12 @@
             link: function(scope, element, attrs) {
                 scope.toggleStreetView = function() {
                     MapService.toggleStreetView(scope.movie.geolocation);
+                };
+                scope.openImdb = function () {
+                    $window.open(scope.movie.imdburl, "_blank");
+                };
+                scope.openPoster = function () {
+                    $window.open(scope.movie.poster, "_blank");
                 }
             },
             templateUrl: "/templates/movieInfo.html"

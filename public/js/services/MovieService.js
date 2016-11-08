@@ -5,25 +5,45 @@
         .module("MovieService", ["MovieModel"])
         .factory("MovieService", Service);
 
-    function Service($rootScope, $http, $q, MovieModel) {
+    function Service($rootScope, $http, $q, __env, MovieModel) {
         var service = {},
+            config = __env.movies,
             movies = [];
 
-        service.getMovies = getMovies;
+        service.getCurrentYearMovies = getCurrentYearMovies;
 
-        function loadMovies() {
+        function getCurrentYear() {
+            return new Date().getFullYear();
+        }
+
+        function prepareFieldsQuery(params) {
+            var query = "";
+            angular.forEach(params, function(value, key) {
+                query += "&" + key + "=" + value;
+            });
+            return query.replace("&", "?");
+        }
+
+        function prepareHeaders() {
+            return {
+                "X-App-Token": config.appToken
+            }
+        }
+
+        function loadMovies(params, limit) {
 
             // Perform an AJAX call to get all of the records in the db.
             var deferred = $q.defer(),
-                url = "https://data.sfgov.org/resource/wwmu-gmzc.json?$where=upper(title) like '%25SUMMER%25'",
-                config = {
-                    headers: {
-                        "X-App-Token": "nKzpXKLBeO9G8uRKNSL5wTrST"
-                    }
+                limit = angular.isNullOrUndefined(limit) ? config.limit : limit,
+                query = prepareFieldsQuery(params),
+                where = encodeURIComponent("upper(title) not like '%SEASON%'"),
+                url = config.sfgovUrl + query + "&$where=" + where + "&$limit=" + limit,
+                httpConfig = {
+                    headers: prepareHeaders()
                 };
 
             $http
-                .get(url, config)
+                .get(url, httpConfig)
                 .success(function(response) {
                     deferred.resolve(response);
                 })
@@ -32,12 +52,16 @@
                 });
 
             return deferred.promise;
-
         }
 
-        function getMovies() {
-            var deferred = $q.defer();
-            loadMovies()
+        function getCurrentYearMovies(limit) {
+
+            var deferred = $q.defer(),
+                params = {
+                    release_year: getCurrentYear()
+                };
+
+            loadMovies(params, limit)
                 .then(function(data) {
                     parseLocations(data);
                     deferred.resolve(movies);

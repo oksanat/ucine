@@ -5,10 +5,11 @@ html
 
         md-toolbar(ng-controller="ToolbarController" class="md-primary")
             div(class="md-toolbar-tools")
-                i(class="material-icons") theaters
+                i(class="material-icons movie") local_movies
                 h2(class="md-flex")= header
+                    div(class="md-caption")= subHeader
                 span(flex)
-                md-button(class="md-icon-button" aria-label="Source code" ng-click="openSource('"+gitRepo+"')")
+                md-button(class="md-icon-button" aria-label="Source code" ng-click="openSource()")
                     md-tooltip(md-direction="left") View Source
                     i(class="material-icons") code
 
@@ -21,17 +22,23 @@ html
                         div#map(class="map" ng-controller="MapController")
 
                         md-button(ng-click="toggleSidenav()" ng-hide="isOpen()" class="md-fab md-accent")
+                            md-tooltip(md-direction="top") ii
                             i(class="material-icons md-48") menu
 
-                md-sidenav(class="md-sidenav-right md-whiteframe-4dp" md-component-id="sideNav" id="sideNav")
+                md-sidenav(class="md-sidenav-right" md-component-id="sideNav" id="sideNav")
                     md-toolbar(class="md-theme-light")
-                        h1(class="md-toolbar-tools") Sidenav Right
+                        div(class="md-toolbar-tools")
+                            span Movie Search
+                            span(flex)
+                            md-button(ng-click="close()" class="md-icon-button")
+                                i(class="material-icons") close
+
                     md-content(ng-controller="SideController" layout-padding)
                         form
                             md-input-container
                                 label(for="testInput") Test input
                                 input#testInput(type="text" ng-model="data" md-autofocus)
-                        md-button(ng-click="close()" class="md-primary") Close Sidenav Right
-                        md-button(ng-click="lucky()" class="md-primary") I'm Feeling Lucky
+                        md-button(ng-click="close()" class="md-primary") Search
+                        md-button(ng-click="lucky()" class="md-primary") Find near me
 
         include ./footer.pug

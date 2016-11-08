@@ -1,10 +1,17 @@
 (function(angular) {
   "use strict";
 
-  angular
-    .module("App", ["MapController", "MenuController", "ToolbarController", "MapService", "MovieService", "GeoLocationService", "ngMaterial"])
-    .config(config)
-    .run(run)
+    // Default environment variables
+    var __env = {};
+    if (window) {
+        Object.assign(__env, window.__env);
+    }
+
+    angular
+        .module("App", ["MapController", "MenuController", "ToolbarController", "MapService", "MovieService", "GeoLocationService", "ngMaterial"])
+        .config(config)
+        .run(run)
+        .constant('__env', __env);
 
     function config($mdThemingProvider, $httpProvider) {
         $mdThemingProvider.theme("ucine")
@@ -19,6 +26,9 @@
     function run() {
         String.prototype.capitalize = function() {
             return this.charAt(0).toUpperCase() + this.slice(1);
+        };
+        angular.isNullOrUndefined = function(value) {
+            return angular.isUndefined(value) || value === null
         };
     }
 

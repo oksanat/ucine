@@ -2,15 +2,6 @@ html, body{
     height: 100%;
     width: 100%;
 }
-
-.md-button.md-fab.md-accent {
-    padding-top: 7px;
-    margin-top: 32px;
-    margin-left: 12px;
-}
-.md-button.md-fab.md-mini.md-primary {
-    padding-top: 8px;
-}
 .main {
     height: 85%;
 }
@@ -26,6 +17,7 @@ html, body{
     text-align: center;
     width: 100%;
 }
+
 .movieInfoOverlay .content {
     margin-bottom: 32px;
     max-width: 400px;
@@ -33,5 +25,19 @@ html, body{
 i.material-icons.movie {
     margin-right: 10px;
     font-size: 48px;
+}
+.md-button.md-fab.md-accent {
+    padding-top: 7px;
+    margin-top: 32px;
+    margin-left: 12px;
+}
+.md-button.md-fab.md-mini.md-primary {
+    padding-top: 8px;
+}
+.sidenav md-input-container {
+    margin: 5px;
+}
+md-checkbox label {
+    color: rgba(0, 0, 0, 0.38);
 }
 

@@ -25,27 +25,32 @@
         }
     }
 
-    function SideController($scope, $mdSidenav, $mdDialog, GeoLocationService) {
+    function SideController($scope, $log, $mdDialog, GeoLocationService, MovieService) {
+        $scope.releaseYears = MovieService.getReleaseYears();
+
         $scope.findNearMe = function () {
 
             GeoLocationService.getCurrentPosition()
                 .then(function(position) {
-                    console.debug("Obtained position", position);
+                    $log.debug("Obtained position", position);
                  })
                  .catch(function(error) {
-                    console.info("Failed to obtain current position, using default");
                      $mdDialog.show(
                          $mdDialog.alert()
                              .parent(angular.element(document.querySelector('#map')))
                              .clickOutsideToClose(true)
                              .title("Ooops...")
-                             .textContent("Location information is unavailable.")
-                             .ariaLabel("Location information is unavailable.")
+                             .textContent("Looks like location information is unavailable.")
+                             .ariaLabel("Looks like location information is unavailable.")
                              .ok("Ok")
                      );
 
                  });
 
+        };
+
+        $scope.submit = function() {
+            MovieService.search($scope.data);
         };
     }
 

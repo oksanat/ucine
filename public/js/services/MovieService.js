@@ -11,6 +11,12 @@
             movies = [];
 
         service.getCurrentYearMovies = getCurrentYearMovies;
+        service.getReleaseYears = getReleaseYears;
+        service.search = search;
+
+        function search(params) {
+            console.log(params);
+        }
 
         function getCurrentYear() {
             return new Date().getFullYear();
@@ -80,6 +86,13 @@
             });
         }
 
+        function getReleaseYears() {
+            var years = [];
+            for (var i = getCurrentYear(); i >= config.firstReleaseYear; i--) {
+                years.push(i);
+            }
+            return years;
+        }
         return service;
     }
 

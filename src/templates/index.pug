@@ -25,20 +25,6 @@ html
                             md-tooltip(md-direction="top")= menuTooltip
                             i(class="material-icons md-48") menu
 
-                md-sidenav(class="md-sidenav-right" md-component-id="sideNav" id="sideNav")
-                    md-toolbar(class="md-theme-light")
-                        div(class="md-toolbar-tools")
-                            span Movie Search
-                            span(flex)
-                            md-button(ng-click="close()" class="md-icon-button")
-                                i(class="material-icons") close
-
-                    md-content(ng-controller="SideController" layout-padding)
-                        form
-                            md-input-container
-                                label(for="testInput") Test input
-                                input#testInput(type="text" ng-model="data" md-autofocus)
-                        md-button(ng-click="close()" class="md-primary") Search
-                        md-button(ng-click="findNearMe()" class="md-primary") Find near me
+                include ./sideNav.pug
 
         include ./footer.pug

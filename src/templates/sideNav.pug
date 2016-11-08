@@ -1,0 +1,33 @@
+md-sidenav(class="md-sidenav-right" md-component-id="sideNav" id="sideNav")
+    md-toolbar(class="md-theme-light")
+        div(class="md-toolbar-tools")
+            span Movie Search
+            span(flex)
+            md-button(ng-click="close()" class="md-icon-button")
+                i(class="material-icons") close
+
+    md-content(ng-controller="SideController" layout-padding)
+        form(class="sidenav" ng-submit="submit()" novalidate)
+            div(layout="row")
+                md-input-container(flex="50")
+                    label(for="title") Title
+                    input#title(type="text" ng-model="data.title" ng-pattern="/^[A-z0-9,.]+$/" md-autofocus)
+
+                md-input-container(flex="50")
+                    label Release year
+                    md-select(ng-model="data.year")
+                        md-option(ng-value="year" ng-repeat="year in releaseYears") {{ year }}
+
+            md-input-container
+                label(for="locations") Locations
+                input#locations(type="text" ng-pattern="/^[A-z0-9,.#]+$/" ng-model="data.locations")
+
+            md-input-container
+                label(for="actors") Actors
+                input#actors(type="text" ng-pattern="/^[A-z0-9,.]+$/" ng-model="data.actors")
+
+            md-checkbox(ng-model="data.funFacts" aria-label="Interesting facts?")
+                label Interesting facts?
+            br
+            md-button(type="submit" class="md-primary") Search
+            md-button(type="button" ng-click="findNearMe()" class="md-primary") Find near me

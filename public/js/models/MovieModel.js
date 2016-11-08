@@ -5,7 +5,7 @@
         .module("MovieModel", [])
         .factory("MovieModel", Model);
 
-    function Model ($http, $q) {
+    function Model ($http, $q, __env) {
 
         function Movie(data) {
             this.setData(data);
@@ -38,7 +38,7 @@
             loadGeocode: function(address) {
                 // Perform an AJAX call to get all of the records in the db.
                 var deferred = $q.defer(),
-                    url = "http://127.0.0.1:8080/geocodes",
+                    url = __env.apiUrl + "/geocodes",
                     config = {
                         params: {
                             address: address
@@ -60,7 +60,7 @@
             loadImdbInfo: function(title, year) {
                 // Perform an AJAX call to get all of the records in the db.
                 var deferred = $q.defer(),
-                    url = "http://127.0.0.1:8080/imdb",
+                    url = __env.apiUrl + "/imdb",
                     config = {
                         params: {
                             name: encodeURIComponent(title),

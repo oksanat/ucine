@@ -13,8 +13,11 @@
 
     window.__env.movies = {
         limit: 10,
+        firstReleaseYear: 1924,
         sfgovUrl: "https://data.sfgov.org/resource/wwmu-gmzc.json",
         appToken: "nKzpXKLBeO9G8uRKNSL5wTrST"
     }
+
+    window.__env.apiUrl = "http://127.0.0.1:8080";
 
 }(this));

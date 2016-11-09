@@ -27,6 +27,7 @@
 
     function SideController($scope, $log, $mdDialog, GeoLocationService, MovieService) {
         $scope.releaseYears = MovieService.getReleaseYears();
+        $scope.limits = MovieService.getLimits();
 
         $scope.findNearMe = function () {
 

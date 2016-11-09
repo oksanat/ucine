@@ -12,14 +12,28 @@
 
         service.getCurrentYearMovies = getCurrentYearMovies;
         service.getReleaseYears = getReleaseYears;
+        service.getLimits = getLimits;
         service.search = search;
 
         function search(params) {
-            console.log(params);
+            var where = "";
+            if (!angular.isNullOrUndefined(params) && !angular.isEmpty(params)) {
+                where = "$where=" + prepareWhereClause(params);
+
+            }
+            console.log(config.sfgovUrl + "?" + where);
         }
 
         function getCurrentYear() {
             return new Date().getFullYear();
+        }
+
+        function prepareWhereClause(params) {
+            var clauses = [];
+            angular.forEach(params, function(value, key) {
+                clauses.push("upper(" + key + ") like '" + encodeURIComponent("%" + value.toUpperCase() + "%")+"'");
+            });
+            return clauses.join(" AND ");
         }
 
         function prepareFieldsQuery(params) {
@@ -36,18 +50,27 @@
             }
         }
 
-        function loadMovies(params, limit) {
+        function loadMovies(where, query, limit) {
 
             // Perform an AJAX call to get all of the records in the db.
             var deferred = $q.defer(),
                 limit = angular.isNullOrUndefined(limit) ? config.limit : limit,
-                query = prepareFieldsQuery(params),
-                where = encodeURIComponent("upper(title) not like '%SEASON%'"),
-                url = config.sfgovUrl + query + "&$where=" + where + "&$limit=" + limit,
                 httpConfig = {
                     headers: prepareHeaders()
-                };
+                },
+                url = config.sfgovUrl + "?$limit=" + limit;
 
+            if (!angular.isNullOrUndefined(where)) {
+                url += "&$where=" + where;
+            }
+            if (!angular.isNullOrUndefined(query)) {
+                url += "&" + query;
+            }
+            /*
+            query = prepareFieldsQuery(params),
+                where = encodeURIComponent("upper(title) not like '%SEASON%'"),
+                url = config.sfgovUrl + query + "&$where=" + where + "&$limit=" + limit,
+            */
             $http
                 .get(url, httpConfig)
                 .success(function(response) {
@@ -67,7 +90,7 @@
                     release_year: getCurrentYear()
                 };
 
-            loadMovies(params, limit)
+            loadMovies(null, null, limit)
                 .then(function(data) {
                     parseLocations(data);
                     deferred.resolve(movies);
@@ -93,6 +116,11 @@
             }
             return years;
         }
+
+        function getLimits() {
+            return [10, 50, 100, 500];
+        }
+
         return service;
     }
 

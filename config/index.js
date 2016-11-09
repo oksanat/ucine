@@ -11,6 +11,16 @@ var config = {
             provider: "google",
             httpAdapter: "https",
             formatter: null
+        },
+        boundaries: {
+            ne: {
+                lat: 37.6040,
+                lng: -123.0137
+            },
+            sw: {
+                lat: 37.8324,
+                lng: -122.3549
+            }
         }
     }
 }

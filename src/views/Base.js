@@ -15,7 +15,6 @@ module.exports.prototype = {
 
     render: function(data) {
         if(this.response && this.template) {
-            console.log(data);
             this.response.render(this.template, data);
         }
     }

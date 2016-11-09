@@ -17,8 +17,12 @@ module.exports = BaseController.extend({
         this.getLocation(req.query.address, function() {
             if (_.isEmpty(self.content)) {
                 // Query API and save to Db
+
                 geocoder.geocode(req.query.address)
                     .then(function(data) {
+                        if (!self.validate(data)) {
+                            return;
+                        }
                         var location = {
                             address: req.query.address,
                             formattedAddress: data[0].formattedAddress,
@@ -52,5 +56,25 @@ module.exports = BaseController.extend({
             }
             callback();
         }, { address: address });
+    },
+
+    checkBoundaries: function (location) {
+        if ((location.latitude < config.boundaries.sw.lat && location.latitude > config.boundaries.ne.lat) &&
+            (location.longitude < config.boundaries.sw.lng && location.longitude > config.boundaries.ne.lng)) {
+            return true;
+        }
+        return false;
+    },
+
+    validate: function (data) {
+        if (data[0] === null || data[0] === undefined) {
+            return false;
+        }
+        if (!this.checkBoundaries(data[0])) {
+            console.log("Address is out of boundaries: ", data[0].formattedAddress);
+            return false;
+        }
+        return true;
     }
+
 });

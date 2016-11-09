@@ -16,7 +16,7 @@
                 this.actors = this.getActors(data);
                 this.director = angular.isDefined(data.director) ? data.director : null;
                 this.fun_facts = angular.isDefined(data.fun_facts) ? data.fun_facts : null;
-                this.locations = angular.isDefined(data.locations) ? data.locations + ", San Francisco" : null;
+                this.locations = angular.isDefined(data.locations) ? data.locations + ", San Francisco, CA" : null;
                 this.production_company = angular.isDefined(data.production_company) ? data.production_company : null;
                 this.release_year = angular.isDefined(data.release_year) ? data.release_year : null;
                 this.title = this.getTitle(data.title);

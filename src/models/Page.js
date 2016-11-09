@@ -7,7 +7,6 @@ module.exports = function() {
     this.content = null;
     this.menuTooltip = null;
     this.apiKey = config.maps.apiKey;
-    this.gitRepo = config.gitRepo;
 };
 
 module.exports.prototype = {

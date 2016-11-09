@@ -11,7 +11,9 @@
             map,
             panorama,
             infowindow,
-            markers = [];
+            markers = [],
+            bounds = new google.maps.LatLngBounds();
+
         service.refresh = refresh;
         service.toggleStreetView = toggleStreetView;
 
@@ -22,7 +24,7 @@
                 initLatLng = new google.maps.LatLng(position.lat, position.lng),
                 mapOptions = {
                     zoom: config.zoom,
-                    center: initLatLng,
+                    //center: initLatLng,
                     mapTypeControl: true,
                     mapTypeControlOptions: {
                         style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
@@ -37,6 +39,7 @@
             map = new google.maps.Map(document.getElementById("map"), mapOptions);
             infowindow = new google.maps.InfoWindow();
             marker.setMap(map);
+            bounds.extend(initLatLng);
 
             // Default panorama and set up some defaults.
             panorama = map.getStreetView();
@@ -79,6 +82,8 @@
                                         animation: google.maps.Animation.DROP
                                     });
                                 markers.push(marker);
+                                bounds.extend(latLng);
+
                                 movie.setGeoLocation(geolocation);
                                 google.maps.event.addListener(marker, "click", function (marker, movie, infowindow){
                                     return function() {
@@ -89,6 +94,9 @@
                             })
                             .catch(function(error) {
                                 $log.debug("Failed to obtain movie geolocation, skipping");
+                            })
+                            .finally(function() {
+                                map.fitBounds(bounds);
                             });
                     });
                 })

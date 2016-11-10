@@ -65,7 +65,7 @@
                 },
                 limit = config.limit;
 
-            MovieService.getCurrentYearMovies()
+            MovieService.getMostRecentMovies(limit)
                 .then(function(movies) {
                     movies.forEach(function(movie) {
                         if (angular.isNullOrUndefined(movie.locations)) {

@@ -31,9 +31,12 @@
         angular.isNullOrUndefined = function(value) {
             return angular.isUndefined(value) || value === null;
         };
-        angular.isEmpty = function (obj) {
+        angular.isEmpty = function(obj) {
             for (var i in obj) if (obj.hasOwnProperty(i)) return false;
             return true;
+        };
+        angular.isBoolean = function(value) {
+            return typeof value === "boolean";
         };
     }
 

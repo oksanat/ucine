@@ -11,7 +11,7 @@ md-sidenav(class="md-sidenav-right" md-component-id="sideNav" id="sideNav")
             div(flex layout="row")
                 md-input-container(flex="50")
                     label(for="title") Title
-                    input#title(type="text" ng-model="data.title" ng-pattern="/^[A-z0-9,.]+$/" md-autofocus)
+                    input#title(type="text" ng-model="data.title" ng-pattern="/^[A-z 0-9,.]+$/" md-autofocus)
 
                 md-input-container(flex="50")
                     label Release year
@@ -20,12 +20,12 @@ md-sidenav(class="md-sidenav-right" md-component-id="sideNav" id="sideNav")
 
             md-input-container(flex)
                 label(for="locations") Locations
-                input#locations(type="text" ng-pattern="/^[A-z0-9,.#]+$/" ng-model="data.locations")
+                input#locations(type="text" ng-pattern="/^[A-z 0-9,.#]+$/" ng-model="data.locations")
 
             div(flex layout="row")
                 md-input-container(flex="70")
                     label(for="actors") Actors
-                    input#actors(type="text" ng-pattern="/^[A-z0-9,.]+$/" ng-model="data.actors")
+                    input#actors(type="text" ng-pattern="/^[A-z 0-9,.]+$/" ng-model="data.actors")
 
                 md-input-container(flex="30")
                     label Limit

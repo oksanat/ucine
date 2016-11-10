@@ -5,92 +5,76 @@
         .module("MovieService", ["MovieModel"])
         .factory("MovieService", Service);
 
-    function Service($rootScope, $http, $q, __env, MovieModel) {
+    function Service($log, $http, $q, __env, MovieModel) {
         var service = {},
             config = __env.movies,
             movies = [];
 
-        service.getCurrentYearMovies = getCurrentYearMovies;
+        service.search = search;
+        service.getMostRecentMovies = getMostRecentMovies;
         service.getReleaseYears = getReleaseYears;
         service.getLimits = getLimits;
-        service.search = search;
 
-        function search(params) {
-            var where = "";
-            if (!angular.isNullOrUndefined(params) && !angular.isEmpty(params)) {
-                where = "$where=" + prepareWhereClause(params);
+        // Public methods
+        function search(data) {
+            $log.debug(data);
+            var where = [],
+                fieldsQuery = "",
+                whereQuery = "",
+                limit = angular.isNullOrUndefined(data.limit) ? config.limit : data.limit,
+                params = {},
+                deferred = $q.defer();
 
+            if (!angular.isNullOrUndefined(data.title)) {
+                where.push(prepareWhereClause("title", data.title));
             }
-            console.log(config.sfgovUrl + "?" + where);
-        }
-
-        function getCurrentYear() {
-            return new Date().getFullYear();
-        }
-
-        function prepareWhereClause(params) {
-            var clauses = [];
-            angular.forEach(params, function(value, key) {
-                clauses.push("upper(" + key + ") like '" + encodeURIComponent("%" + value.toUpperCase() + "%")+"'");
-            });
-            return clauses.join(" AND ");
-        }
-
-        function prepareFieldsQuery(params) {
-            var query = "";
-            angular.forEach(params, function(value, key) {
-                query += "&" + key + "=" + value;
-            });
-            return query.replace("&", "?");
-        }
-
-        function prepareHeaders() {
-            return {
-                "X-App-Token": config.appToken
+            if (!angular.isNullOrUndefined(data.locations)) {
+                where.push(prepareWhereClause("locations", data.locations));
             }
-        }
-
-        function loadMovies(where, query, limit) {
-
-            // Perform an AJAX call to get all of the records in the db.
-            var deferred = $q.defer(),
-                limit = angular.isNullOrUndefined(limit) ? config.limit : limit,
-                httpConfig = {
-                    headers: prepareHeaders()
-                },
-                url = config.sfgovUrl + "?$limit=" + limit;
-
-            if (!angular.isNullOrUndefined(where)) {
-                url += "&$where=" + where;
+            if (!angular.isNullOrUndefined(data.actors)) {
+                var actors = [];
+                actors.push(prepareWhereClause("actor_1", data.actors));
+                actors.push(prepareWhereClause("actor_2", data.actors));
+                actors.push(prepareWhereClause("actor_3", data.actors));
+                where.push("(" + actors.join(" OR ") + ")");
             }
-            if (!angular.isNullOrUndefined(query)) {
-                url += "&" + query;
+            if (data.funFacts === true) {
+                where.push(prepareWhereClause("fun_facts", data.funFacts));
             }
-            /*
-            query = prepareFieldsQuery(params),
-                where = encodeURIComponent("upper(title) not like '%SEASON%'"),
-                url = config.sfgovUrl + query + "&$where=" + where + "&$limit=" + limit,
-            */
-            $http
-                .get(url, httpConfig)
-                .success(function(response) {
-                    deferred.resolve(response);
+            if (!angular.isNullOrUndefined(data.year)) {
+                fieldsQuery = prepareFieldsQuery({
+                    release_year: data.year
+                });
+            }
+            if (!angular.isEmpty(where)){
+                whereQuery = where.join(" AND ");
+            }
+            params = {
+                limit: limit,
+                where: whereQuery,
+                fields: fieldsQuery
+            }
+            loadMovies(params)
+                .then(function(data) {
+                    parseLocations(data);
+                    $log.debug(movies);
+                    deferred.resolve(movies);
                 })
-                .error(function(error) {
-                    deferred.reject(err);
+                .catch(function(error) {
+                    $log.debug("Failed to load movie data due to: ", error);
+                    deferred.reject(error);
                 });
 
             return deferred.promise;
         }
 
-        function getCurrentYearMovies(limit) {
-
+        function getMostRecentMovies(limit) {
             var deferred = $q.defer(),
                 params = {
-                    release_year: getCurrentYear()
+                    limit: limit,
                 };
 
-            loadMovies(null, null, limit)
+            loadMovies(params)
                 .then(function(data) {
                     parseLocations(data);
                     deferred.resolve(movies);
@@ -103,12 +87,6 @@
             return deferred.promise;
         }
 
-        function parseLocations(locations) {
-            locations.forEach(function(location) {
-                movies.push(new MovieModel(location));
-            });
-        }
-
         function getReleaseYears() {
             var years = [];
             for (var i = getCurrentYear(); i >= config.firstReleaseYear; i--) {
@@ -119,6 +97,79 @@
 
         function getLimits() {
             return [10, 50, 100, 500];
+        }
+
+        // Private methods
+        function getCurrentYear() {
+            return new Date().getFullYear();
+        }
+
+        function prepareWhereClause(key, value) {
+            if (angular.isBoolean(value)) {
+                return key + " is not null";
+            } else {
+                return "upper(" + key + ") like '" + encodeURIComponent("%" + value.toUpperCase() + "%")+"'";
+            }
+        }
+
+        function prepareFieldsQuery(params) {
+            var fields = [];
+            angular.forEach(params, function(value, key) {
+                fields.push(key + "=" + value);
+            });
+            return fields.join("&");
+        }
+
+        function prepareHeaders() {
+            return {
+                "X-App-Token": config.appToken
+            }
+        }
+
+        function prepareUrl(params) {
+            var orderByQuery = angular.isNullOrUndefined(params.orderBy) ? getDefaultOrderByQuery() : params.orderBy,
+                limit = angular.isNullOrUndefined(params.limit) ? config.limit : params.limit,
+                url = config.sfgovUrl + "?$limit=" + limit;
+
+            if (!angular.isNullOrUndefined(params.where)) {
+                url += "&$where=" + params.where;
+            }
+            if (!angular.isNullOrUndefined(params.fields)) {
+                url += "&" + params.fields;
+            }
+            return url + "&" + orderByQuery;
+        }
+
+        function loadMovies(params) {
+
+            // Perform an AJAX call to get all of the records in the db.
+            var deferred = $q.defer(),
+                httpConfig = {
+                    headers: prepareHeaders()
+                },
+                url = prepareUrl(params);
+
+            $http
+                .get(url, httpConfig)
+                .success(function(response) {
+                    deferred.resolve(response);
+                })
+                .error(function(error) {
+                    deferred.reject(err);
+                });
+
+            return deferred.promise;
+        }
+
+        function getDefaultOrderByQuery() {
+            return "$order=release_year DESC";
+        }
+
+        function parseLocations(locations) {
+            movies = [];
+            locations.forEach(function(location) {
+                movies.push(new MovieModel(location));
+            });
         }
 
         return service;

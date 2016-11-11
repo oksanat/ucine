@@ -11,13 +11,12 @@
             movies = [];
 
         service.search = search;
-        service.getMostRecentMovies = getMostRecentMovies;
         service.getReleaseYears = getReleaseYears;
         service.getLimits = getLimits;
 
         // Public methods
         function search(data) {
-            $log.debug(data);
+            $log.debug("Search data: ", data);
             var where = [],
                 fieldsQuery = "",
                 whereQuery = "",
@@ -57,30 +56,11 @@
             loadMovies(params)
                 .then(function(data) {
                     parseLocations(data);
-                    $log.debug(movies);
+                    $log.debug("Loaded movies: ", movies);
                     deferred.resolve(movies);
                 })
                 .catch(function(error) {
                     $log.debug("Failed to load movie data due to: ", error);
-                    deferred.reject(error);
-                });
-
-            return deferred.promise;
-        }
-
-        function getMostRecentMovies(limit) {
-            var deferred = $q.defer(),
-                params = {
-                    limit: limit,
-                };
-
-            loadMovies(params)
-                .then(function(data) {
-                    parseLocations(data);
-                    deferred.resolve(movies);
-                })
-                .catch(function(error) {
-                    console.info("Failed to parse movie data due to: ", error);
                     deferred.reject(error);
                 });
 

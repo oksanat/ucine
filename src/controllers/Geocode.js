@@ -6,37 +6,66 @@ var BaseController = require("./Base"),
 
 module.exports = BaseController.extend({
     name: "Geocode",
-    content: null,
+    location: null,
+    geocoder: NodeGeocoder(config.maps),
 
-    run: function(req, res, next) {
+    geocode: function(req, res, next) {
         model.setDb(req.db);
 
         var self = this,
-            geocoder = NodeGeocoder(config.maps);
+            params = {
+                address: req.query.address
+            };
 
-        this.getLocation(req.query.address, function() {
-            if (_.isEmpty(self.content)) {
+        this.getLocation(params, function() {
+            if (_.isEmpty(self.location)) {
                 // Query API and save to Db
-
-                geocoder.geocode(req.query.address)
+                self.geocoder.geocode(req.query.address)
                     .then(function(data) {
                         if (!self.validate(data)) {
                             return;
                         }
-                        var location = {
-                            address: req.query.address,
-                            formattedAddress: data[0].formattedAddress,
-                            latitude: data[0].latitude,
-                            longitude: data[0].longitude
-                        };
+                        data[0].address = req.query.address;
+                        var location = self.prepareLocationObj(data);
                         self.insertLocation(location, function() {});
                         res.json(location);
                     })
                     .catch(function(err) {
-                        console.log(err);
+                        console.log("Failed to obtain coordinates due to: ", err);
                     });
             } else {
-                res.json(self.content);
+                res.json(self.location);
+            }
+        });
+    },
+
+    reverse: function(req, res, next) {
+        model.setDb(req.db);
+
+        var self = this,
+            latitude = req.query.latitude,
+            longitude = req.query.longitude,
+            params = {
+                coords: {
+                    latitude: latitude,
+                    longitude: longitude
+                }
+            };
+
+        this.getLocation(params, function() {
+            if (_.isEmpty(self.location)) {
+                // Query API and save to Db
+                self.geocoder.reverse({ lat: latitude, lon: longitude })
+                    .then(function(data) {
+                        var location = self.prepareLocationObj(data);
+                        self.insertLocation(location, function() {});
+                        res.json(location);
+                    })
+                    .catch(function(error) {
+                        console.log("Failed to obtain address due to: ", error);
+                    });
+            } else {
+                res.json(self.location);
             }
         });
     },
@@ -47,15 +76,28 @@ module.exports = BaseController.extend({
         });
     },
 
-    getLocation: function(address, callback) {
+    getLocation: function(queryObj, callback) {
         var self = this;
-        this.content = {};
+        this.location = {};
+
         model.getList(function(err, records) {
             if(records.length > 0) {
-                self.content = records[0];
+                self.location = records[0];
             }
             callback();
-        }, { address: address });
+        }, queryObj);
+    },
+
+    prepareLocationObj: function(data) {
+        var location = {
+            address: !_.isEmpty(data[0].address) ? data[0].address : data[0].streetName,
+            formattedAddress: data[0].formattedAddress,
+            coords: {
+                latitude: data[0].latitude.toFixed(7),
+                longitude: data[0].longitude.toFixed(7)
+            }
+        };
+        return location;
     },
 
     checkBoundaries: function (location) {

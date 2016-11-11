@@ -2,7 +2,7 @@
     "use strict";
 
     angular
-        .module("MapService", ["MovieModel", "MovieService"])
+        .module("MapService", ["MovieService"])
         .factory("MapService", Service);
 
     function Service($log, $compile, __env, MovieService) {
@@ -15,6 +15,7 @@
             bounds = new google.maps.LatLngBounds();
 
         service.refresh = refresh;
+        service.addMovies = addMovies;
         service.toggleStreetView = toggleStreetView;
 
         return service;
@@ -24,7 +25,6 @@
                 initLatLng = new google.maps.LatLng(position.lat, position.lng),
                 mapOptions = {
                     zoom: config.zoom,
-                    //center: initLatLng,
                     mapTypeControl: true,
                     mapTypeControlOptions: {
                         style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
@@ -50,23 +50,33 @@
             });
         }
 
-        function refresh(scope) {
+        function refresh(rootScope, scope) {
+            rootScope.$emit("showSpinner");
             if (angular.isNullOrUndefined(map)) {
                 initialize();
             }
-            addCurrentYearMovies(scope);
+            if (angular.isNullOrUndefined(scope.data)) {
+                scope.data = {};
+            }
+            addMovies(rootScope, scope);
         }
 
-        function addCurrentYearMovies(scope) {
-
+        function addMovies(rootScope, scope) {
             var prepareContent = function (movie) {
                     scope.movie = movie;
                     return ($compile("<movie-info info=movie></movie-info>")(scope)[0]);
                 },
-                limit = config.limit;
+                params = {
+                    limit: __env.movies.limit
+                };
 
-            MovieService.getMostRecentMovies(limit)
+            MovieService.search(angular.extend(params, scope.data))
                 .then(function(movies) {
+                    if (angular.isEmpty(movies)) {
+                        scope.$emit("emptyResults");
+                        return;
+                    }
+                    deleteMarkers();
                     movies.forEach(function(movie) {
                         if (angular.isNullOrUndefined(movie.locations)) {
                             $log.debug("Movie '" + movie.title + "' location is undefined, skipping");
@@ -74,7 +84,7 @@
                         }
                         movie.loadGeocode(movie.locations)
                             .then(function(geolocation) {
-                                var latLng = new google.maps.LatLng(geolocation.latitude, geolocation.longitude),
+                                var latLng = new google.maps.LatLng(geolocation.coords.latitude, geolocation.coords.longitude),
                                     marker = new google.maps.Marker({
                                         map: map,
                                         position: latLng,
@@ -97,6 +107,7 @@
                             })
                             .finally(function() {
                                 map.fitBounds(bounds);
+                                rootScope.$emit("hideSpinner");
                             });
                     });
                 })
@@ -120,6 +131,17 @@
             } else {
                 panorama.setVisible(false);
             }
+        }
+
+        function setMapOnAll(map) {
+            for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(map);
+            }
+        }
+
+        function deleteMarkers() {
+            setMapOnAll(null);
+            markers = [];
         }
 
     }

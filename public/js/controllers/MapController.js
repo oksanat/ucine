@@ -6,10 +6,12 @@
         .controller("MapController", Controller)
         .directive("movieInfo", Directive)
 
-    function Controller($scope, MapService) {
+    function Controller($rootScope, $scope, MapService) {
+
         angular.element(document).ready(function () {
-            MapService.refresh($scope);
+            MapService.refresh($rootScope, $scope);
         });
+
     }
 
     function Directive($window, MapService) {

@@ -6,7 +6,7 @@
         .controller("MenuController", Controller)
         .controller("SideController", SideController);
 
-    function Controller($scope, $timeout, $mdSidenav) {
+    function Controller($scope, $mdSidenav) {
         var sideNavId = "sideNav";
         $scope.toggleSidenav = buildToggler(sideNavId);
 
@@ -18,6 +18,10 @@
             $mdSidenav("sideNav").close();
         };
 
+        $scope.$on("closeSideNav", function() {
+            $scope.close();
+        });
+
         function buildToggler(sideNavId) {
             return function() {
                 $mdSidenav(sideNavId).toggle();
@@ -25,33 +29,50 @@
         }
     }
 
-    function SideController($scope, $log, $mdDialog, GeoLocationService, MovieService) {
+    function SideController($rootScope, $scope, $log, $mdDialog, MovieService, GeoLocationService, MapService) {
         $scope.releaseYears = MovieService.getReleaseYears();
         $scope.limits = MovieService.getLimits();
 
         $scope.findNearMe = function () {
+            $scope.$emit("closeSideNav");
+            $rootScope.$emit("showSpinner");
 
-            GeoLocationService.getCurrentPosition()
-                .then(function(position) {
-                    $log.debug("Obtained position", position);
-                 })
-                 .catch(function(error) {
-                     $mdDialog.show(
-                         $mdDialog.alert()
-                             .parent(angular.element(document.querySelector('#map')))
-                             .clickOutsideToClose(true)
-                             .title("Ooops...")
-                             .textContent("Looks like location information is unavailable.")
-                             .ariaLabel("Looks like location information is unavailable.")
-                             .ok("Ok")
-                     );
-
-                 });
+            GeoLocationService.getCurrentLocation()
+                .then(function(location) {
+                    $scope.data = {
+                        locations: location.address
+                    };
+                    MapService.refresh($rootScope, $scope);
+                })
+                .catch(function(error) {
+                    $log.debug("Failed to obtain address due to: ", error);
+                    showAlert("Ooops", "Looks like location information is unavailable.");
+                })
+                .finally(function() {
+                    $rootScope.$emit("hideSpinner");
+                });
 
         };
 
         $scope.submit = function() {
-            MovieService.search($scope.data);
+            $scope.$emit("closeSideNav");
+            MapService.refresh($rootScope, $scope);
+        };
+
+        $scope.$on("emptyResults", function() {
+            showAlert("Ooops", "Sorry, but looks like no matches found.");
+        });
+
+        function showAlert(title, content) {
+            $mdDialog.show(
+                $mdDialog.alert()
+                    .parent(angular.element(document.querySelector('#map')))
+                    .clickOutsideToClose(true)
+                    .title(title)
+                    .textContent(content)
+                    .ariaLabel(content)
+                    .ok("Ok")
+            );
         };
     }
 

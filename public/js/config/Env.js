@@ -2,6 +2,7 @@
     window.__env = window.__env || {};
 
     window.__env.gitRepo = "https://github.com/oksanat/ucine";
+    window.__env.enableDebug = true;
 
     window.__env.maps = {
         zoom: 13,

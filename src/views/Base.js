@@ -5,6 +5,7 @@
         this.response = response;
         this.template = template;
     };
+
     module.exports.prototype = {
 
         extend: function(properties) {

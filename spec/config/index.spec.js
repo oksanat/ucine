@@ -1,5 +1,4 @@
 describe("Configuration setup", function() {
-
     "use strict";
 
     it("Should load DEV configuration by default", function() {

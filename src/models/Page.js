@@ -36,6 +36,12 @@
         },
         getMenuTooltip: function() {
             return this.menuTooltip;
+        },
+        setContent: function (content) {
+            this.content = content;
+        },
+        getContent: function () {
+            return this.content;
         }
     };
 

@@ -1,21 +1,26 @@
-var Model = require("./Base"),
-    crypto = require("crypto"),
-    model = new Model();
+(function() {
+    "use strict";
 
-var Geocode = model.extend({
+    var Model = require("./Base"),
+        crypto = require("crypto"),
+        model = new Model();
 
-    insert: function(data, callback) {
-        data.Id = crypto.randomBytes(20).toString("hex"); 
-        this.collection().insert(data, {}, callback || function(){ });
-    },
+    var Geocode = model.extend({
 
-    update: function(data, callback) {
-        this.collection().update({Id: data.Id}, data, {}, callback || function(){ });
-    },
+        insert: function(data, callback) {
+            data.Id = crypto.randomBytes(20).toString("hex");
+            this.collection().insert(data, {}, callback || function(){ });
+        },
 
-    getList: function(callback, query) {
-        this.collection().find(query || {}).toArray(callback);
-    }
+        update: function(data, callback) {
+            this.collection().update({Id: data.Id}, data, {}, callback || function(){ });
+        },
 
-});
-module.exports = Geocode;
+        getList: function(callback, query) {
+            this.collection().find(query || {}).toArray(callback);
+        }
+
+    });
+    module.exports = Geocode;
+
+})();

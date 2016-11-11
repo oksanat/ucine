@@ -1,24 +1,29 @@
-var BaseController = require("./Base"),
-    Model = require("../models/Movie"),
-    model = new Model(),
-    config = require("../../config")();
+(function () {
+    "use strict";
 
-module.exports = BaseController.extend({
-    name: "Imdb",
-    content: null,
+    var BaseController = require("./Base"),
+        Model = require("../models/Movie"),
+        model = new Model(),
+        config = require("../../config")();
 
-    run: function(req, res, next) {
-        var self = this;
-        model.getInfo({ name: req.query.name, year: req.query.year })
-            .then(function(data) {
-                self.content = data;
-                res.json(self.content);
-            })
-            .catch(function(err) {
-                console.log("Failed to load imdb data due to: ", err);
-                res.status(500);
-                return next("Failed to load imdb data.");
-            });
-    }
+    module.exports = BaseController.extend({
+        name: "Imdb",
+        content: null,
 
-});
+        run: function(req, res, next) {
+            var self = this;
+            model.getInfo({ name: req.query.name, year: req.query.year })
+                .then(function(data) {
+                    self.content = data;
+                    res.json(self.content);
+                })
+                .catch(function(err) {
+                    console.log("Failed to load imdb data due to: ", err);
+                    res.status(500);
+                    return next("Failed to load imdb data.");
+                });
+        }
+
+    });
+
+})();

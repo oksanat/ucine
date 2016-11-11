@@ -1,12 +1,17 @@
-var _ = require("underscore");
+(function() {
+    "use strict";
 
-module.exports = {
-    name: "base",
-    extend: function(child) {
-        return _.extend({}, this, child);
-    },
+    var _ = require("underscore");
 
-    get: function(req, res, next) {
+    module.exports = {
+        name: "base",
+        extend: function(child) {
+            return _.extend({}, this, child);
+        },
 
-    }
-};
+        get: function(req, res, next) {
+
+        }
+    };
+
+})();

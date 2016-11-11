@@ -1,5 +1,7 @@
 describe("Configuration setup", function() {
 
+    "use strict";
+
     it("Should load DEV configuration by default", function() {
         var config = require("../../config")();
         expect(config.env).toBe("DEV");

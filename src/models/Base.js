@@ -16,7 +16,9 @@ module.exports.prototype = {
     },
 
     collection: function() {
-        if(this._collection) return this._collection;
-        return this._collection = this.db.collection('ucine-content');
+        if (!this._collection) {
+            this._collection = this.db.collection("ucine-content");
+        }
+        return this._collection;
     }
-}
+};

@@ -1,6 +1,7 @@
 var BaseController = require("./Base"),
     View = require("../views/Base"),
-    pageModel = new(require("../models/Page"));
+    Model = require("../models/Page"),
+    pageModel = new Model();
 
 module.exports = BaseController.extend({
     name: "Home",
@@ -11,16 +12,7 @@ module.exports = BaseController.extend({
         pageModel.setSubHeader("If you love movies, and you love San Francisco, you're bound to love this ...");
         pageModel.setMenuTooltip("Find the titles, locations, fun facts, names and much more.");
 
-        var self = this;
-        this.getContent(function() {
-            var v = new View(res, "index");
-            v.render(pageModel);
-        })
-    },
-
-    getContent: function(callback) {
-        var self = this;
-        this.content = {};
-        callback();
+        var v = new View(res, "index");
+        v.render(pageModel);
     }
 });

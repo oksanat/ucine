@@ -34,4 +34,4 @@ module.exports.prototype = {
     getMenuTooltip: function() {
         return this.menuTooltip;
     }
-}
+};

@@ -1,5 +1,6 @@
 var BaseController = require("./Base"),
-    model = new (require("../models/Movie")),
+    Model = require("../models/Movie"),
+    model = new Model(),
     config = require("../../config")();
 
 module.exports = BaseController.extend({

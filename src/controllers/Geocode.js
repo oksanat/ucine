@@ -1,5 +1,6 @@
 var BaseController = require("./Base"),
-    model = new (require("../models/Geocode")),
+    Model = require("../models/Geocode"),
+    model = new Model(),
     config = require("../../config")(),
     _ = require("underscore"),
     NodeGeocoder = require("node-geocoder");
@@ -8,6 +9,7 @@ module.exports = BaseController.extend({
     name: "Geocode",
     location: null,
     geocoder: NodeGeocoder(config.maps),
+
 
     geocode: function(req, res, next) {
         model.setDb(req.db);

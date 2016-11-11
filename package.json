@@ -20,5 +20,11 @@
         "node-geocoder": "~3.14.0",
         "imdb-api": "~2.2.0",
         "q": "~2.0.3"
+    },
+    "devDependencies": {
+        "grunt": "1.0.1",
+        "grunt-contrib-jshint": "1.0.0",
+        "grunt-jasmine-runner": "~0.6.0",
+        "grunt-jasmine-node": "0.3.1"
     }
 }

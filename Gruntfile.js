@@ -11,12 +11,18 @@ module.exports = function(grunt) {
         },
         jshint: {
             files: ["Gruntfile.js", "src/**/*.js", "spec/**/*.js"]
+        },
+        karma: {
+            unit: {
+                configFile: 'karma.conf.js'
+            }
         }
     });
 
     grunt.loadNpmTasks("grunt-jasmine-node");
     grunt.loadNpmTasks("grunt-contrib-jshint");
+    grunt.loadNpmTasks('grunt-karma');
 
     grunt.registerTask("default", ["jasmine_node", "jshint"]);
-    grunt.registerTask("tests", ["jasmine_node"]);
+    grunt.registerTask("test", ["jasmine_node", "karma"]);
 };

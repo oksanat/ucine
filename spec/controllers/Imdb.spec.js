@@ -1,6 +1,6 @@
 describe("Imdb controller", function() {
     "use strict";
-    
+
     var Imdb = require("../../src/controllers/Imdb"),
         Model = require("../../src/models/Movie"),
         Q = require("q"),

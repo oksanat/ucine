@@ -114,7 +114,8 @@
         },
 
         validate: function (data) {
-            if (data[0] === null || data[0] === undefined) {
+            if (data === null || data === undefined ||
+                data[0] === null || data[0] === undefined) {
                 return false;
             }
             if (!this.checkBoundaries(data[0])) {

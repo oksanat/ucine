@@ -3,11 +3,9 @@ describe("Geocode controller", function() {
     
     var Geocode = require("../../src/controllers/Geocode"),
         Model = require("../../src/models/Geocode"),
-        model;
-
-    beforeEach(function() {
-        model = new Model();
-    });
+        config = require("../../config")(),
+        Q = require("q"),
+        NodeGeocoder = require("node-geocoder");
 
     describe("Geocode defined methods", function() {
         it("Should have geocode method", function() {
@@ -118,24 +116,145 @@ describe("Geocode controller", function() {
 
     });
 
-    it("Should call model insert to insert location", function() {
-        var location = {};
-        spyOn(Model.prototype, "insert").andCallFake(function(){
-            return true;
-        });
+    describe("Geocode insertlocation", function() {
+        it("Should call model insert to insert location", function() {
+            var location = {};
+            spyOn(Model.prototype, "insert").andCallFake(function(){
+                return true;
+            });
 
-        Geocode.insertLocation(location, function() {});
-        expect(Model.prototype.insert).toHaveBeenCalled();
+            Geocode.insertLocation(location, function() {});
+            expect(Model.prototype.insert).toHaveBeenCalled();
+        });
     });
 
-    it("Should call model getList in order to get location", function() {
-        var queryObj = {};
-        spyOn(Model.prototype, "getList").andCallFake(function(){
-            return {};
-        });
+    describe("Geocode geLocation", function() {
+        it("Should call model getList in order to get location", function() {
+            var queryObj = {};
+            spyOn(Model.prototype, "getList").andCallFake(function(){
+                return {};
+            });
 
-        Geocode.getLocation(queryObj, function() {});
-        expect(Model.prototype.getList).toHaveBeenCalled();
+            Geocode.getLocation(queryObj, function() {});
+            expect(Model.prototype.getList).toHaveBeenCalled();
+        });
     });
 
+    describe("Geocode reverse", function() {
+        var request,
+            resource;
+
+        beforeEach(function() {
+            request = {
+                query: {
+                    latitude: 37.6040,
+                    longitude: -123.0137
+                }
+            };
+            resource = {
+                send: function() {},
+                json: function() {},
+                status: function() {}
+            };
+        });
+
+        it("Should use data from cache if exists", function() {
+
+            spyOn(Model.prototype, "getList").andCallFake(function(callback) {
+                callback(null, [{address: "Lewisham High Street"}]);
+            });
+            resource.json = function(location) {
+                expect(location).toEqual({address: "Lewisham High Street"});
+            };
+            Geocode.reverse(request, resource, function() {});
+            expect(Model.prototype.getList).toHaveBeenCalled();
+        });
+
+        it("Should call geocoder.reverse if data doesn't exist", function() {
+
+            var geocoder = NodeGeocoder(config.maps),
+                data = [{
+                    address: "Lewisham High Street",
+                    streetName: "High Street",
+                    formattedAddress: "102 Lewisham High Street, London",
+                    latitude: 37.60401212123123,
+                    longitude: -123.0137123123123
+                }];
+            Geocode.setGeocoder(geocoder);
+            spyOn(Model.prototype, "getList").andCallFake(function(callback) {
+                callback(null, []);
+            });
+
+            spyOn(geocoder, "reverse").andCallFake(function() {
+                var deferred = Q.defer();
+                deferred.reject("Failed to lookup data");
+                return deferred.promise;
+            });
+
+            Geocode.reverse(request, resource, function() {});
+            expect(Model.prototype.getList).toHaveBeenCalled();
+            expect(geocoder.reverse).toHaveBeenCalled();
+
+        });
+    });
+
+    describe("Geocode geocode", function() {
+        var request,
+            resource;
+
+        beforeEach(function() {
+            request = {
+                query: {
+                    address: "Lewisham High Street",
+                    latitude: 37.6040,
+                    longitude: -123.0137
+                }
+            };
+            resource = {
+                send: function() {},
+                json: function() {},
+                status: function() {}
+            };
+        });
+
+        it("Should use data from cache if exists", function() {
+
+            spyOn(Model.prototype, "getList").andCallFake(function(callback) {
+                callback(null, [{address: "Lewisham High Street"}]);
+            });
+            resource.json = function(location) {
+                expect(location).toEqual({address: "Lewisham High Street"});
+            };
+
+            Geocode.geocode(request, resource, function() {});
+            expect(Model.prototype.getList).toHaveBeenCalled();
+        });
+
+        it("Should call geocoder.geocode if data doesn't exist", function() {
+
+            var geocoder = NodeGeocoder(config.maps),
+                data = [{
+                    address: "Lewisham High Street",
+                    streetName: "High Street",
+                    formattedAddress: "102 Lewisham High Street, London",
+                    latitude: 37.60401212123123,
+                    longitude: -123.0137123123123
+                }];
+            Geocode.setGeocoder(geocoder);
+
+            spyOn(Model.prototype, "getList").andCallFake(function(callback) {
+                callback(null, []);
+            });
+
+            spyOn(geocoder, "geocode").andCallFake(function() {
+                var deferred = Q.defer();
+                deferred.reject("Failed to geocode data");
+                return deferred.promise;
+            });
+
+            Geocode.geocode(request, resource, function() {});
+            expect(Model.prototype.getList).toHaveBeenCalled();
+            expect(geocoder.geocode).toHaveBeenCalled();
+        });
+    });
 });

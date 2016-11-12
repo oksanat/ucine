@@ -11,8 +11,15 @@
     module.exports = BaseController.extend({
         name: "Geocode",
         location: null,
-        geocoder: NodeGeocoder(config.maps),
+        geocoder: null,
 
+        setGeocoder: function(geoCoder) {
+            if (geoCoder === null || geoCoder === undefined ) {
+                this.geocoder = NodeGeocoder(config.maps);
+            } else {
+                this.geocoder = geoCoder;
+            }
+        },
 
         geocode: function(req, res, next) {
             model.setDb(req.db);
@@ -56,7 +63,6 @@
                         longitude: longitude
                     }
                 };
-
             this.getLocation(params, function() {
                 if (_.isEmpty(self.location)) {
                     // Query API and save to Db
@@ -84,7 +90,6 @@
         getLocation: function(queryObj, callback) {
             var self = this;
             this.location = {};
-
             model.getList(function(err, records) {
                 if(records.length > 0) {
                     self.location = records[0];

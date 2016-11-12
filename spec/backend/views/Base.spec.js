@@ -1,6 +1,6 @@
 describe("Base view", function() {
     "use strict";
-    var View = require("../../src/views/Base");
+    var View = require("../../../src/views/Base");
 
     it("Should create and render new view", function() {
         var responseMockup = {

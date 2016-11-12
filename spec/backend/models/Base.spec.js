@@ -1,7 +1,7 @@
 describe("Base Model", function() {
     "use strict";
 
-    var Model = require("../../src/models/Base"),
+    var Model = require("../../../src/models/Base"),
         model,
         dbMockup = {};
 

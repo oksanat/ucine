@@ -48,6 +48,7 @@
             if (!angular.isEmpty(where)){
                 whereQuery = where.join(" AND ");
             }
+
             params = {
                 limit: limit,
                 where: whereQuery,

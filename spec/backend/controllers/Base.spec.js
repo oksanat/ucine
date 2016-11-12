@@ -1,6 +1,6 @@
 describe("Base controller", function() {
     "use strict";
-    var BaseController = require("../../src/controllers/Base");
+    var BaseController = require("../../../src/controllers/Base");
 
     it("Should have a method extend which returns a child instance", function() {
         expect(BaseController.extend).toBeDefined();

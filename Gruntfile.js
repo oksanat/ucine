@@ -7,7 +7,7 @@ module.exports = function(grunt) {
                 match: ".",
                 specNameMatcher: "spec",
             },
-            all: ["spec/"]
+            all: ["spec/backend/"]
         },
         jshint: {
             files: ["Gruntfile.js", "src/**/*.js", "spec/**/*.js"]

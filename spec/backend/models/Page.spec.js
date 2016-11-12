@@ -1,7 +1,7 @@
 describe("Page Model", function() {
     "use strict";
 
-    var PageModel = require("../../src/models/Page"),
+    var PageModel = require("../../../src/models/Page"),
         pageModel;
 
     beforeEach(function() {

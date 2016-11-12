@@ -1,7 +1,7 @@
 describe("Movie Model", function() {
     "use strict";
 
-    var Model = require("../../src/models/Movie"),
+    var Model = require("../../../src/models/Movie"),
         Imdb = require("imdb-api"),
         Q = require("q"),
         model,

@@ -1,6 +1,6 @@
 describe("Geocode Model", function() {
     "use strict";
-    var GeocodeModel = require("../../src/models/Geocode"),
+    var GeocodeModel = require("../../../src/models/Geocode"),
         MongoMock = require("mongomock"),
         model;
 

@@ -1,9 +1,9 @@
 describe("Geocode controller", function() {
     "use strict";
     
-    var Geocode = require("../../src/controllers/Geocode"),
-        Model = require("../../src/models/Geocode"),
-        config = require("../../config")(),
+    var Geocode = require("../../../src/controllers/Geocode"),
+        Model = require("../../../src/models/Geocode"),
+        config = require("../../../config")(),
         Q = require("q"),
         NodeGeocoder = require("node-geocoder");
 

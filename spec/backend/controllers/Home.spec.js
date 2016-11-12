@@ -1,8 +1,8 @@
 describe("Home controller", function() {
     "use strict";
-    var Home = require("../../src/controllers/Home"),
-        Model = require("../../src/models/Page"),
-        View = require("../../src/views/Base"),
+    var Home = require("../../../src/controllers/Home"),
+        Model = require("../../../src/models/Page"),
+        View = require("../../../src/views/Base"),
         model;
 
     beforeEach(function() {

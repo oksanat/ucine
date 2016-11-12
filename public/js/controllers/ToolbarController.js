@@ -5,9 +5,9 @@
         .module("ToolbarController", [])
         .controller("ToolbarController", Controller);
 
-    function Controller($scope, $window, __env) {
+    function Controller($scope, $window) {
         $scope.openSource = function() {
-            $window.open(__env.gitRepo, "_blank");
+            $window.open($window.__env.gitRepo, "_blank");
         }
     }
 

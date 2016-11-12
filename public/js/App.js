@@ -13,7 +13,7 @@
             "ngMaterial"])
         .config(config)
         .run(run)
-        .constant('__env', __env);
+        .constant("__env", __env);
 
     function config($mdThemingProvider, $mdProgressCircularProvider, $httpProvider, $logProvider, __env) {
         // Configure look & feel

@@ -1,9 +1,8 @@
-var PageModel = require("../../src/models/Page");
-    dbMockup = {};
-
 describe("Page Model", function() {
     "use strict";
-    var pageModel;
+
+    var PageModel = require("../../src/models/Page"),
+        pageModel;
 
     beforeEach(function() {
         pageModel = new PageModel();

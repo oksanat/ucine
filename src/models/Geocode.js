@@ -12,10 +12,6 @@
             this.collection().insert(data, {}, callback || function(){ });
         },
 
-        update: function(data, callback) {
-            this.collection().update({Id: data.Id}, data, {}, callback || function(){ });
-        },
-
         getList: function(callback, query) {
             this.collection().find(query || {}).toArray(callback);
         }

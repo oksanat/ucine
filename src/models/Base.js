@@ -4,6 +4,7 @@
     module.exports = function(db) {
         this.db = db;
     };
+
     module.exports.prototype = {
         extend: function(properties) {
             var Child = module.exports;

@@ -1,8 +1,13 @@
-var Model = require("../../src/models/Base"),
-    dbMockup = {};
-
 describe("Base Model", function() {
     "use strict";
+
+    var Model = require("../../src/models/Base"),
+        model,
+        dbMockup = {};
+
+    beforeEach(function() {
+        model = new Model(dbMockup);
+    });
 
     it("Should create a new model", function() {
         var model = new Model(dbMockup);

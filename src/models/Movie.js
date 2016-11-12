@@ -2,12 +2,13 @@
     "use strict";
 
     var Model = require("./Base"),
-        Imdb = require('imdb-api'),
+        Imdb = require("imdb-api"),
         Q = require("q"),
         _ = require("underscore"),
         model = new Model();
 
     var Movie = model.extend({
+
         getInfo: function(data) {
 
             var parseData = function (data) {
@@ -33,6 +34,7 @@
         }
 
     });
+
     module.exports = Movie;
 
 })();

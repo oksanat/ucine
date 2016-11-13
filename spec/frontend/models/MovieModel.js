@@ -1,32 +1,34 @@
 describe('MovieModel', function() {
 
-    var movieModel, httpBackend;
+    var $movieModel,
+        $httpBackend;
 
     beforeEach(function(){
         module("MovieModel");
-        inject(function($injector){
-            movieModel = $injector.get("MovieModel");
-            httpBackend = $injector.get("$httpBackend");
-            httpBackend
-                .when("GET", /^http:\/\/127.0.0.1:8080\/(imdb)/)
-                .respond(200, {
-                    imdburl: "http://cool.url/",
-                    plot: "Some story",
-                    poster: "N/A",
-                    actors: "Robin"
-                });
-        });
-
-    });
-
-    afterEach(function () {
-        httpBackend.flush();
-        httpBackend.verifyNoOutstandingExpectation();
-        httpBackend.verifyNoOutstandingRequest();
     });
 
     describe("setData", function() {
-        it("should set properties from data", function(done) {
+        beforeEach(function(){
+            inject(function($injector){
+                $movieModel = $injector.get("MovieModel");
+                $httpBackend = $injector.get("$httpBackend");
+                $httpBackend
+                    .when("GET", /^http:\/\/127.0.0.1:8080\/(imdb)/)
+                    .respond(200, {
+                        imdburl: "http://cool.url/",
+                        plot: "Some story",
+                        poster: "N/A",
+                        actors: "Robin"
+                    });
+            });
+
+        });
+
+        afterEach(function () {
+            $httpBackend.flush();
+        });
+
+        it("Should set properties from data", function(done) {
             var data = {
                 actor_1: "Oksana",
                 title: "Forgotten",
@@ -36,7 +38,7 @@ describe('MovieModel', function() {
                 release_year: 2009
             };
 
-            var model = new movieModel(data);
+            var model = new $movieModel(data);
             expect(model.title).toBe(data.title);
             expect(model.actors).toBe(data.actor_1);
             expect(model.director).toBe(data.director);
@@ -51,13 +53,13 @@ describe('MovieModel', function() {
             expect(model.actors).toBe(data.actor_1);
         });
 
-        it("should get actors from imdb", function(done) {
+        it("Should set actors from imdb if not defined in data", function(done) {
             var data = {
                 title: "Forgotten",
                 release_year: 2009
             };
 
-            var model = new movieModel(data);
+            var model = new $movieModel(data);
             expect(model.actors).toBe('');
             done();
             expect(model.actors).toBe("Robin");

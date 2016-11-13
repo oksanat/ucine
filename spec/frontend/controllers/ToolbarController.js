@@ -1,20 +1,25 @@
 describe("ToolbarController", function () {
 
-    var scope, window, Controller;
+    var $rootScope,
+        $window,
+        $scope,
+        $controller;
 
-    beforeEach(module("ToolbarController"));
+    beforeEach(function() {
+        module("ToolbarController");
 
-    beforeEach(inject(function($controller, $window) {
-        scope = {};
-        window = $window;
-        Controller = $controller('ToolbarController', {
-            $scope: scope
+        inject(function($injector){
+            $window = $injector.get("$window");
+            $rootScope = $injector.get("$rootScope");
+            $scope = $rootScope.$new();
+            $controller = $injector.get("$controller")("ToolbarController", {$scope: $scope});
         });
-    }));
 
-    it('should test window open event', function () {
-        spyOn(window, 'open');
-        scope.openSource();
+    });
+
+    it("should open window on openSource", function () {
+        spyOn(window, "open");
+        $scope.openSource();
         expect(window.open).toHaveBeenCalled();
     });
 

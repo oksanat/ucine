@@ -53,7 +53,7 @@
                 limit: limit,
                 where: whereQuery,
                 fields: fieldsQuery
-            }
+            };
             loadMovies(params)
                 .then(function(data) {
                     parseLocations(data);
@@ -112,10 +112,10 @@
                 limit = UtilsService.isNullOrUndefined(params.limit) ? config.limit : params.limit,
                 url = config.sfgovUrl + "?$limit=" + limit;
 
-            if (!UtilsService.isNullOrUndefined(params.where)) {
+            if (!UtilsService.isNullOrUndefined(params.where) && !UtilsService.isEmpty(params.where)) {
                 url += "&$where=" + params.where;
             }
-            if (!UtilsService.isNullOrUndefined(params.fields)) {
+            if (!UtilsService.isNullOrUndefined(params.fields) && !UtilsService.isEmpty(params.fields)) {
                 url += "&" + params.fields;
             }
             return url + "&" + orderByQuery;
@@ -129,7 +129,6 @@
                     headers: prepareHeaders()
                 },
                 url = prepareUrl(params);
-
             $http
                 .get(url, httpConfig)
                 .success(function(response) {

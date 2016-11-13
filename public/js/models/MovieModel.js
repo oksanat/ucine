@@ -67,13 +67,14 @@
                 $http
                     .get(url, config)
                     .then(function(response) {
-                        self.imdburl = response.imdburl;
+                        var data = response.data;
+                        self.imdburl = data.imdburl;
                         if (!self.actors) {
-                            self.actors = response.actors;
+                            self.actors = data.actors;
                         }
-                        self.plot = response.plot;
-                        self.poster = response.poster;
-                        deferred.resolve(response);
+                        self.plot = data.plot;
+                        self.poster = data.poster;
+                        deferred.resolve(data);
                     })
                     .catch(function(error) {
                         deferred.reject(error);

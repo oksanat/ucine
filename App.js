@@ -39,7 +39,8 @@ MongoClient.connect("mongodb://" + config.mongodb.host + ":" + config.mongodb.po
                 }
             },
             attachGeocoder = function (req, res, next) {
-                req.geocoder =  NodeGeocoder(config.maps);
+                var geocoder = NodeGeocoder(config.maps);
+                Geocode.setGeocoder(geocoder);
                 next();
             },
             errorHandler = function(err, req, res, next) {

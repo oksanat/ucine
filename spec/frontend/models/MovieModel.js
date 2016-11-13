@@ -9,7 +9,7 @@ describe("MovieModel", function() {
             $movieModel = $injector.get("MovieModel");
             $httpBackend = $injector.get("$httpBackend");
             $httpBackend
-                .when("GET", /^http:\/\/127.0.0.1:8080\/(imdb)/)
+                .when("GET", "http://127.0.0.1:8080/imdb?name=Forgotten&year=2009")
                 .respond(200, {
                     imdburl: "http://cool.url/",
                     plot: "Some story",
@@ -23,6 +23,8 @@ describe("MovieModel", function() {
 
         afterEach(function () {
             $httpBackend.flush();
+            $httpBackend.verifyNoOutstandingExpectation();
+            $httpBackend.verifyNoOutstandingRequest();
         });
 
         it("Should set properties from data", function(done) {
@@ -66,7 +68,7 @@ describe("MovieModel", function() {
     describe("loaGeocode", function() {
         beforeEach(function(){
             $httpBackend
-                .when("GET", /^http:\/\/127.0.0.1:8080\/(geocodes)/)
+                .when("GET", "http://127.0.0.1:8080/geocodes?address=San+Francisco")
                 .respond(200, {
                     address: "San Francisco",
                     coords: {

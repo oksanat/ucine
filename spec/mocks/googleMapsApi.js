@@ -5,7 +5,7 @@ var google = {
         Marker : function () {
             return {
                 setMap: function() {}
-            }
+            };
         },
         InfoWindow : function () {
         },
@@ -15,7 +15,7 @@ var google = {
         LatLngBounds: function(sw, ne) {
             return {
                 extend: function() {}
-            }
+            };
         },
         Map: function(obj){
             return {
@@ -26,7 +26,7 @@ var google = {
                         }
                     };
                 }
-            }
+            };
         },
         MapTypeControlStyle: {
             HORIZONTAL_BAR: 1

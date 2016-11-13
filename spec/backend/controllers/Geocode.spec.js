@@ -180,7 +180,6 @@ describe("Geocode controller", function() {
                     latitude: 37.60401212123123,
                     longitude: -123.0137123123123
                 }];
-            Geocode.setGeocoder(geocoder);
             spyOn(Model.prototype, "getList").andCallFake(function(callback) {
                 callback(null, []);
             });
@@ -190,7 +189,7 @@ describe("Geocode controller", function() {
                 deferred.reject("Failed to lookup data");
                 return deferred.promise;
             });
-
+            Geocode.setGeocoder(geocoder);
             Geocode.reverse(request, resource, function() {});
             expect(Model.prototype.getList).toHaveBeenCalled();
             expect(geocoder.reverse).toHaveBeenCalled();
@@ -200,7 +199,8 @@ describe("Geocode controller", function() {
 
     describe("Geocode geocode", function() {
         var request,
-            resource;
+            resource,
+            geocoder;
 
         beforeEach(function() {
             request = {
@@ -215,6 +215,8 @@ describe("Geocode controller", function() {
                 json: function() {},
                 status: function() {}
             };
+            geocoder = NodeGeocoder(config.maps);
+            Geocode.setGeocoder(geocoder);
         });
 
         it("Should use data from cache if exists", function() {
@@ -225,22 +227,19 @@ describe("Geocode controller", function() {
             resource.json = function(location) {
                 expect(location).toEqual({address: "Lewisham High Street"});
             };
-
             Geocode.geocode(request, resource, function() {});
             expect(Model.prototype.getList).toHaveBeenCalled();
         });
 
         it("Should call geocoder.geocode if data doesn't exist", function() {
 
-            var geocoder = NodeGeocoder(config.maps),
-                data = [{
+            var data = [{
                     address: "Lewisham High Street",
                     streetName: "High Street",
                     formattedAddress: "102 Lewisham High Street, London",
                     latitude: 37.60401212123123,
                     longitude: -123.0137123123123
                 }];
-            Geocode.setGeocoder(geocoder);
 
             spyOn(Model.prototype, "getList").andCallFake(function(callback) {
                 callback(null, []);

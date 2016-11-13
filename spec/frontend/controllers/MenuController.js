@@ -31,7 +31,7 @@ describe("MenuController", function () {
 
     });
 
-    it("Should close sideNave", function () {
+    it("Should close sideNav", function () {
         $scope.close();
         expect(sideNavCloseMock).toHaveBeenCalled();
     });

@@ -1,28 +1,28 @@
-describe("UtilsService", function() {
+describe("$service", function() {
 
-    var utilsService;
+    var $service;
 
     beforeEach(function(){
         module("UtilsService");
         inject(function($injector) {
-            utilsService = $injector.get("UtilsService");
+            $service = $injector.get("UtilsService");
         });
     });
 
     describe("isNullOrUndefined", function() {
 
         it("Should return true for null value", function () {
-            var result = utilsService.isNullOrUndefined(null);
+            var result = $service.isNullOrUndefined(null);
             expect(result).toBeTruthy();
         });
 
         it("Should return true for undefined value", function () {
-            var result = utilsService.isNullOrUndefined();
+            var result = $service.isNullOrUndefined();
             expect(result).toBeTruthy();
         });
 
         it("Should return false for int value", function () {
-            var result = utilsService.isNullOrUndefined(1);
+            var result = $service.isNullOrUndefined(1);
             expect(result).toBeFalsy();
         });
 
@@ -30,24 +30,24 @@ describe("UtilsService", function() {
 
     describe("isEmpty", function() {
         it("Should return true for empty obj", function () {
-            var result = utilsService.isEmpty({});
+            var result = $service.isEmpty({});
             expect(result).toBeTruthy();
         });
 
         it("Should return false for obj with values", function () {
-            var result = utilsService.isEmpty({a: "a"});
+            var result = $service.isEmpty({a: "a"});
             expect(result).toBeFalsy();
         });
     });
 
     describe("isBoolean", function() {
         it("Should return true for boolean", function () {
-            var result = utilsService.isBoolean(true);
+            var result = $service.isBoolean(true);
             expect(result).toBeTruthy();
         });
 
         it("Should return false for string", function () {
-            var result = utilsService.isBoolean("a");
+            var result = $service.isBoolean("a");
             expect(result).toBeFalsy();
         });
     });

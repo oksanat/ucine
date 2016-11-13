@@ -5,24 +5,21 @@ describe('MovieModel', function() {
 
     beforeEach(function(){
         module("MovieModel");
+        inject(function($injector) {
+            $movieModel = $injector.get("MovieModel");
+            $httpBackend = $injector.get("$httpBackend");
+            $httpBackend
+                .when("GET", /^http:\/\/127.0.0.1:8080\/(imdb)/)
+                .respond(200, {
+                    imdburl: "http://cool.url/",
+                    plot: "Some story",
+                    poster: "N/A",
+                    actors: "Robin"
+                });
+        });
     });
 
     describe("setData", function() {
-        beforeEach(function(){
-            inject(function($injector){
-                $movieModel = $injector.get("MovieModel");
-                $httpBackend = $injector.get("$httpBackend");
-                $httpBackend
-                    .when("GET", /^http:\/\/127.0.0.1:8080\/(imdb)/)
-                    .respond(200, {
-                        imdburl: "http://cool.url/",
-                        plot: "Some story",
-                        poster: "N/A",
-                        actors: "Robin"
-                    });
-            });
-
-        });
 
         afterEach(function () {
             $httpBackend.flush();
@@ -63,6 +60,58 @@ describe('MovieModel', function() {
             expect(model.actors).toBe('');
             done();
             expect(model.actors).toBe("Robin");
+        });
+    });
+
+    describe("loaGeocode", function() {
+        beforeEach(function(){
+            $httpBackend
+                .when("GET", /^http:\/\/127.0.0.1:8080\/(geocodes)/)
+                .respond(200, {
+                    address: "San Francisco",
+                    coords: {
+                        latitude: 37.7749295,
+                        longitude: -122.4194155
+                    },
+                    formattedAddress: "San Francisco, CA, USA"
+                });
+
+        });
+
+        afterEach(function () {
+            $httpBackend.flush();
+        });
+
+        it("Should call geocodes Api and return promise", function(done) {
+            var address = "San Francisco"
+            var data = {
+                title: "Forgotten",
+                release_year: 2009
+            };
+
+            var model = new $movieModel(data);
+            model.loadGeocode(address).then(function(geolocation) {
+                expect(geolocation.data.formattedAddress).toBe("San Francisco, CA, USA");
+            });
+            done();
+        });
+
+    });
+
+    describe("setGeolocation", function() {
+        it("Should set geolocation", function(done) {
+            var data = {
+                    title: "Forgotten",
+                    release_year: 2009
+                },
+                geolocation = {
+                    address: "London",
+                };
+
+            var model = new $movieModel(data);
+            done();
+            model.setGeoLocation(geolocation);
+            expect(model.geolocation).toEqual(geolocation);
         });
     });
 

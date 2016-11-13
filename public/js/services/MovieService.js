@@ -2,12 +2,12 @@
     "use strict";
 
     angular
-        .module("MovieService", ["MovieModel"])
+        .module("MovieService", ["MovieModel", "UtilsService"])
         .factory("MovieService", Service);
 
-    function Service($log, $http, $q, __env, MovieModel) {
+    function Service($log, $http, $q, $window, MovieModel, UtilsService) {
         var service = {},
-            config = __env.movies,
+            config = $window.__env.movies,
             movies = [];
 
         service.search = search;
@@ -20,17 +20,17 @@
             var where = [],
                 fieldsQuery = "",
                 whereQuery = "",
-                limit = angular.isNullOrUndefined(data.limit) ? config.limit : data.limit,
+                limit = UtilsService.isNullOrUndefined(data.limit) ? config.limit : data.limit,
                 params = {},
                 deferred = $q.defer();
 
-            if (!angular.isNullOrUndefined(data.title)) {
+            if (!UtilsService.isNullOrUndefined(data.title)) {
                 where.push(prepareWhereClause("title", data.title));
             }
-            if (!angular.isNullOrUndefined(data.locations)) {
+            if (!UtilsService.isNullOrUndefined(data.locations)) {
                 where.push(prepareWhereClause("locations", data.locations));
             }
-            if (!angular.isNullOrUndefined(data.actors)) {
+            if (!UtilsService.isNullOrUndefined(data.actors)) {
                 var actors = [];
                 actors.push(prepareWhereClause("actor_1", data.actors));
                 actors.push(prepareWhereClause("actor_2", data.actors));
@@ -40,12 +40,12 @@
             if (data.funFacts === true) {
                 where.push(prepareWhereClause("fun_facts", data.funFacts));
             }
-            if (!angular.isNullOrUndefined(data.year)) {
+            if (!UtilsService.isNullOrUndefined(data.year)) {
                 fieldsQuery = prepareFieldsQuery({
                     release_year: data.year
                 });
             }
-            if (!angular.isEmpty(where)){
+            if (!UtilsService.isEmpty(where)){
                 whereQuery = where.join(" AND ");
             }
 
@@ -86,7 +86,7 @@
         }
 
         function prepareWhereClause(key, value) {
-            if (angular.isBoolean(value)) {
+            if (UtilsService.isBoolean(value)) {
                 return key + " is not null";
             } else {
                 return "upper(" + key + ") like '" + encodeURIComponent("%" + value.toUpperCase() + "%")+"'";
@@ -108,14 +108,14 @@
         }
 
         function prepareUrl(params) {
-            var orderByQuery = angular.isNullOrUndefined(params.orderBy) ? getDefaultOrderByQuery() : params.orderBy,
-                limit = angular.isNullOrUndefined(params.limit) ? config.limit : params.limit,
+            var orderByQuery = UtilsService.isNullOrUndefined(params.orderBy) ? getDefaultOrderByQuery() : params.orderBy,
+                limit = UtilsService.isNullOrUndefined(params.limit) ? config.limit : params.limit,
                 url = config.sfgovUrl + "?$limit=" + limit;
 
-            if (!angular.isNullOrUndefined(params.where)) {
+            if (!UtilsService.isNullOrUndefined(params.where)) {
                 url += "&$where=" + params.where;
             }
-            if (!angular.isNullOrUndefined(params.fields)) {
+            if (!UtilsService.isNullOrUndefined(params.fields)) {
                 url += "&" + params.fields;
             }
             return url + "&" + orderByQuery;

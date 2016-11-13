@@ -2,12 +2,12 @@
     "use strict";
 
     angular
-        .module("MapService", ["MovieService"])
+        .module("MapService", ["MovieService", "UtilsService"])
         .factory("MapService", Service);
 
-    function Service($log, $compile, __env, MovieService) {
+    function Service($log, $compile, $window, MovieService, UtilsService) {
         var service = {},
-            config = __env.maps,
+            config = $window.__env.maps,
             map,
             panorama,
             infowindow,
@@ -52,10 +52,10 @@
 
         function refresh(rootScope, scope) {
             rootScope.$emit("showSpinner");
-            if (angular.isNullOrUndefined(map)) {
+            if (UtilsService.isNullOrUndefined(map)) {
                 initialize();
             }
-            if (angular.isNullOrUndefined(scope.data)) {
+            if (UtilsService.isNullOrUndefined(scope.data)) {
                 scope.data = {};
             }
             addMovies(rootScope, scope);
@@ -67,18 +67,18 @@
                     return ($compile("<movie-info info=movie></movie-info>")(scope)[0]);
                 },
                 params = {
-                    limit: __env.movies.limit
+                    limit: $window.__env.movies.limit
                 };
 
             MovieService.search(angular.extend(params, scope.data))
                 .then(function(movies) {
-                    if (angular.isEmpty(movies)) {
+                    if (UtilsService.isEmpty(movies)) {
                         scope.$emit("emptyResults");
                         return;
                     }
                     deleteMarkers();
                     movies.forEach(function(movie) {
-                        if (angular.isNullOrUndefined(movie.locations)) {
+                        if (UtilsService.isNullOrUndefined(movie.locations)) {
                             $log.debug("Movie '" + movie.title + "' location is undefined, skipping");
                             return;
                         }
@@ -103,7 +103,7 @@
                                 } (marker, movie, infowindow));
                             })
                             .catch(function(error) {
-                                $log.debug("Failed to obtain movie geolocation, skipping");
+                                $log.debug("Failed to obtain movie geolocation, skipping", error);
                             })
                             .finally(function() {
                                 map.fitBounds(bounds);

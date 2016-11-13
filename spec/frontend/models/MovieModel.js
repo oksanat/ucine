@@ -1,4 +1,4 @@
-describe('MovieModel', function() {
+describe("MovieModel", function() {
 
     var $movieModel,
         $httpBackend;
@@ -83,15 +83,15 @@ describe('MovieModel', function() {
         });
 
         it("Should call geocodes Api and return promise", function(done) {
-            var address = "San Francisco"
-            var data = {
-                title: "Forgotten",
-                release_year: 2009
-            };
+            var address = "San Francisco",
+                data = {
+                    title: "Forgotten",
+                    release_year: 2009
+                };
 
             var model = new $movieModel(data);
             model.loadGeocode(address).then(function(geolocation) {
-                expect(geolocation.data.formattedAddress).toBe("San Francisco, CA, USA");
+                expect(geolocation.formattedAddress).toBe("San Francisco, CA, USA");
             });
             done();
         });

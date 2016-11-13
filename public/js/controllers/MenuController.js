@@ -2,7 +2,7 @@
     "use strict";
 
     angular
-        .module("MenuController", ["ngMaterial", "MapService", "GeoLocationService"])
+        .module("MenuController", ["MapService", "GeoLocationService"])
         .controller("MenuController", Controller)
         .controller("SideController", SideController);
 

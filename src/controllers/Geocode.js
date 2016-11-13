@@ -5,24 +5,20 @@
         Model = require("../models/Geocode"),
         model = new Model(),
         config = require("../../config")(),
-        _ = require("underscore"),
-        NodeGeocoder = require("node-geocoder");
+        _ = require("underscore");
 
     module.exports = BaseController.extend({
         name: "Geocode",
         location: null,
         geocoder: null,
 
-        setGeocoder: function(geoCoder) {
-            if (geoCoder === null || geoCoder === undefined ) {
-                this.geocoder = NodeGeocoder(config.maps);
-            } else {
-                this.geocoder = geoCoder;
-            }
+        setGeocoder: function(geocoder) {
+            this.geocoder = geocoder;
         },
 
         geocode: function(req, res, next) {
             model.setDb(req.db);
+            this.setGeocoder(req.geocoder);
 
             var self = this,
                 params = {
@@ -53,6 +49,7 @@
 
         reverse: function(req, res, next) {
             model.setDb(req.db);
+            this.setGeocoder(req.geocoder);
 
             var self = this,
                 latitude = req.query.latitude,

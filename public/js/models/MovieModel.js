@@ -44,7 +44,7 @@
                 $http
                     .get(url, config)
                     .then(function(response) {
-                        deferred.resolve(response);
+                        deferred.resolve(response.data);
                     })
                     .catch(function(error) {
                         deferred.reject(error);

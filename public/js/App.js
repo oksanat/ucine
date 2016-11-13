@@ -9,7 +9,7 @@
 
     angular
         .module("App", ["MapController", "MenuController", "ToolbarController",
-            "MapService", "MovieService", "GeoLocationService", "SpinnerService",
+            "MapService", "MovieService", "GeoLocationService", "SpinnerService", "UtilsService",
             "ngMaterial"])
         .config(config)
         .run(run)
@@ -40,16 +40,6 @@
     function run($rootScope, SpinnerService) {
         String.prototype.capitalize = function() {
             return this.charAt(0).toUpperCase() + this.slice(1);
-        };
-        angular.isNullOrUndefined = function(value) {
-            return angular.isUndefined(value) || value === null;
-        };
-        angular.isEmpty = function(obj) {
-            for (var i in obj) if (obj.hasOwnProperty(i)) return false;
-            return true;
-        };
-        angular.isBoolean = function(value) {
-            return typeof value === "boolean";
         };
 
         $rootScope.$on("showSpinner", function() {

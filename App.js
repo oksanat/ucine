@@ -10,7 +10,8 @@ var express = require("express"),
     Home = require("./src/controllers/Home"),
     Geocode = require("./src/controllers/Geocode"),
     Imdb = require("./src/controllers/Imdb"),
-    MongoClient = require("mongodb").MongoClient;
+    MongoClient = require("mongodb").MongoClient,
+    NodeGeocoder = require("node-geocoder");
 
 app.set("views", __dirname + "/src/templates");
 app.set("view engine", "pug");
@@ -37,6 +38,10 @@ MongoClient.connect("mongodb://" + config.mongodb.host + ":" + config.mongodb.po
                     next();
                 }
             },
+            attachGeocoder = function (req, res, next) {
+                req.geocoder =  NodeGeocoder(config.maps);
+                next();
+            },
             errorHandler = function(err, req, res, next) {
                 var error = {
                     status: {
@@ -52,11 +57,11 @@ MongoClient.connect("mongodb://" + config.mongodb.host + ":" + config.mongodb.po
             Home.run(req, res, next);
         });
 
-        app.get('/geocodes', checkRequiredParam(["address"]), attachDb, function(req, res, next) {
+        app.get('/geocodes', checkRequiredParam(["address"]), attachDb, attachGeocoder, function(req, res, next) {
             Geocode.geocode(req, res, next);
         });
 
-        app.get('/addresses', checkRequiredParam(["latitude", "longitude"]), attachDb, function(req, res, next) {
+        app.get('/addresses', checkRequiredParam(["latitude", "longitude"]), attachDb, attachGeocoder, function(req, res, next) {
             Geocode.reverse(req, res, next);
         });
 

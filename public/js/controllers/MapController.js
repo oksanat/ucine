@@ -9,9 +9,12 @@
     function Controller($rootScope, $scope, MapService) {
 
         angular.element(document).ready(function () {
-            MapService.refresh($rootScope, $scope);
+            $scope.init();
         });
 
+        $scope.init = function () {
+            MapService.refresh($rootScope, $scope);
+        };
     }
 
     function Directive($window, MapService) {

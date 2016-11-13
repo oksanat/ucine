@@ -59,7 +59,7 @@ describe("MovieModel", function() {
             };
 
             var model = new $movieModel(data);
-            expect(model.actors).toBe('');
+            expect(model.actors).toBe("");
             done();
             expect(model.actors).toBe("Robin");
         });

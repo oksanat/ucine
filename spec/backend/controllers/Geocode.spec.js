@@ -107,7 +107,7 @@ describe("Geocode controller", function() {
 
         it("Should have coords with 7 digits after the decimal point", function() {
             var countDecimals = function(number) {
-                return (number.split('.')[1] || []).length;
+                return (number.split(".")[1] || []).length;
             };
             var location = Geocode.prepareLocationObj(data);
             expect(countDecimals(location.coords.latitude)).toBe(7);

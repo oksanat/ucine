@@ -5,7 +5,7 @@
         .module("MovieModel", [])
         .factory("MovieModel", Model);
 
-    function Model ($http, $q, __env) {
+    function Model ($http, $q, $window) {
 
         function Movie(data) {
             this.setData(data);
@@ -19,12 +19,8 @@
                 this.locations = angular.isDefined(data.locations) ? data.locations + ", San Francisco, CA" : null;
                 this.production_company = angular.isDefined(data.production_company) ? data.production_company : null;
                 this.release_year = angular.isDefined(data.release_year) ? data.release_year : null;
-                this.title = this.getTitle(data.title);
+                this.title = angular.isDefined(data.title) ? data.title : null;
                 this.loadImdbInfo(this.title, this.release_year);
-            },
-
-            getTitle: function(title) {
-                return title;
             },
 
             getActors: function (data) {
@@ -38,7 +34,7 @@
             loadGeocode: function(address) {
                 // Perform an AJAX call to get all of the records in the db.
                 var deferred = $q.defer(),
-                    url = __env.apiUrl + "/geocodes",
+                    url = $window.__env.apiUrl + "/geocodes",
                     config = {
                         params: {
                             address: address
@@ -47,10 +43,10 @@
 
                 $http
                     .get(url, config)
-                    .success(function(response) {
+                    .then(function(response) {
                         deferred.resolve(response);
                     })
-                    .error(function(error) {
+                    .catch(function(error) {
                         deferred.reject(error);
                     });
 
@@ -60,7 +56,7 @@
             loadImdbInfo: function(title, year) {
                 // Perform an AJAX call to get all of the records in the db.
                 var deferred = $q.defer(),
-                    url = __env.apiUrl + "/imdb",
+                    url = $window.__env.apiUrl + "/imdb",
                     config = {
                         params: {
                             name: encodeURIComponent(title),
@@ -70,7 +66,7 @@
                     self = this;
                 $http
                     .get(url, config)
-                    .success(function(response) {
+                    .then(function(response) {
                         self.imdburl = response.imdburl;
                         if (!self.actors) {
                             self.actors = response.actors;
@@ -79,10 +75,9 @@
                         self.poster = response.poster;
                         deferred.resolve(response);
                     })
-                    .error(function(error) {
+                    .catch(function(error) {
                         deferred.reject(error);
                     });
-
                 return deferred.promise;
             }
 

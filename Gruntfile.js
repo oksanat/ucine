@@ -4,10 +4,9 @@ module.exports = function(grunt) {
         jasmine_node: {
             options: {
                 forceExit: true,
-                match: ".",
                 specNameMatcher: "spec",
             },
-            all: ["spec/backend/"]
+            all: ["spec/backend"]
         },
         jshint: {
             files: ["Gruntfile.js", "src/**/*.js", "spec/**/*.js"]
@@ -23,6 +22,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-contrib-jshint");
     grunt.loadNpmTasks('grunt-karma');
 
-    grunt.registerTask("default", ["jasmine_node", "jshint"]);
+    grunt.registerTask("default", ["jshint", "jasmine_node", "karma"]);
     grunt.registerTask("test", ["jasmine_node", "karma"]);
 };

@@ -121,6 +121,9 @@
         }
         
         function toggleStreetView(geolocation) {
+            if (UtilsService.isNullOrUndefined(panorama)) {
+                return;
+            }
             var toggle = panorama.getVisible();
             if (toggle == false) {
                 panorama.setPosition({

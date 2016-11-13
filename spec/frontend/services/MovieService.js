@@ -57,7 +57,7 @@ describe("MovieService", function() {
                     "$order=release_year DESC")
                 .respond(200, data);
 
-            $service.search({});
+            $service.search(searchData);
             $rootScope.$apply();
         });
 

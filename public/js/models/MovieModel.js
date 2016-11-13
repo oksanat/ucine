@@ -24,7 +24,7 @@
             },
 
             getActors: function (data) {
-                return [data.actor_1, data.actor_2, data.actor_3].filter(function (val) {return val;}).join(', ');
+                return [data.actor_1, data.actor_2, data.actor_3].filter(function (val) {return val;}).join(", ");
             },
 
             setGeoLocation: function (geolocation) {

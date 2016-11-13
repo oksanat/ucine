@@ -66,7 +66,7 @@
         function showAlert(title, content) {
             $mdDialog.show(
                 $mdDialog.alert()
-                    .parent(angular.element(document.querySelector('#map')))
+                    .parent(angular.element(document.querySelector("#map")))
                     .clickOutsideToClose(true)
                     .title(title)
                     .textContent(content)

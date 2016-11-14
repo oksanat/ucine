@@ -8,7 +8,7 @@ on your street?
 
 [Live demo](http://52.16.150.246:8080)
 
-By default: 10 most recent film locations are shown.
+10 most recent film locations are shown by default (on page load).
 Click on each pointer to get more information about: 
 * Actors
 * Director

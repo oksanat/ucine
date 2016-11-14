@@ -47,6 +47,7 @@ Start application
 ```
 
 ## Configuration file
+### Backend
 ```
     config/index.js
 ```
@@ -64,6 +65,21 @@ boundaries.ne.lat   | Location boundaries: North East latitude
 boundaries.ne.lng   | Location boundaries: North East longitude
 boundaries.sw.lat   | Location boundaries: South West latitude
 boundaries.sw.lng   | Location boundaries: South West longitude
+### Frontend
+```
+    public/js/config/Env.js
+```
+Name                      | Description
+--------------------------| -------------
+gitRepo                   | Git repo
+enableDebug               | Enable/disable $log.debug messages
+maps.zoom                 | Maps zoom level
+maps.position             | Default positon on a map
+movies.limit              | Default number of movies to load
+movies.firstReleaseYear   | Maps http adapter
+movies.sfgovUrl           | SFGov api
+movies.appToken           | SFGov application token
+apiUrl                    | Backend server api
 
 ## Running tests
 ### jasmine_node

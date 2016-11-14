@@ -22,6 +22,8 @@ If available:
 * Click on a "Imdb" icon to open Imdb movie page
 * Click on a "Poster" icon to open poster image
 
+<small>"I am feeling lucky" button won't be able to determine your location on live demo site because it requires https.</small>
+
 ## Application
 * Node.js backend with Express and MongoDB
 * AngularJS frontend
@@ -100,6 +102,7 @@ apiUrl                    | Backend server api
 * More unit tests
 * End to end tests
 * Deployment script
+* Support https
 * Support language templating
 * User Preferences
 

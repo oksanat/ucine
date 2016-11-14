@@ -17,11 +17,12 @@ Click on each pointer to get more information about:
 * Plot
 
 Click on a "Street View" icon to wander the locations and see what you ou stumble upon.
+
 If available: 
 * Click on a "Imdb" icon to open Imdb movie page
 * Click on a "Poster" icon to open poster image
 
-### Application
+## Application
 * Node.js backend with Express and MongoDB
 * AngularJS frontend
 

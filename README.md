@@ -3,7 +3,7 @@
 If you love movies, and you love San Francisco, you're bound to love this! 
 Search filming locations of movies shot in San Francisco starting from 1924.
 
-Feeling lucky? Why not to try "I am feeling lucky" button to find location right
+Feeling lucky? Why not to try **"I am feeling lucky"** button to find location right
 on your street?
 
 [Live demo](http://52.16.150.246:8080)
@@ -16,13 +16,13 @@ Click on each pointer to get more information about:
 * Fun Facts
 * Plot
 
-Click on a "Street View" icon to wander the locations and see what you ou stumble upon.
+Click on a **"Street View"** icon to wander the locations and see what you ou stumble upon.
 
 If available: 
-* Click on a "Imdb" icon to open Imdb movie page
-* Click on a "Poster" icon to open poster image
+* Click on a **"Imdb"** icon to open Imdb movie page
+* Click on a **"Poster"** icon to open poster image
 
-<small>"I am feeling lucky" button won't be able to determine your location on live demo site because it requires https.</small>
+> "I am feeling lucky" button won't be able to determine your location on live demo site because it requires https.
 
 ## Application
 * Node.js backend with Express and MongoDB

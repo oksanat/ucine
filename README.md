@@ -6,7 +6,20 @@ Search filming locations of movies shot in San Francisco starting from 1924.
 Feeling lucky? Why not to try "I am feeling lucky" button to find location right
 on your street?
 
-Live demo: http://52.16.150.246:8080
+[Live demo](http://52.16.150.246:8080)
+
+By default: 10 most recent film locations are shown.
+Click on each pointer to get more information about: 
+* Actors
+* Director
+* Location
+* Fun Facts
+* Plot
+
+Click on a "Street View" icon to wander the locations and see what you ou stumble upon.
+If available: 
+* Click on a "Imdb" icon to open Imdb movie page
+* Click on a "Poster" icon to open poster image
 
 ### Application
 * Node.js backend with Express and MongoDB

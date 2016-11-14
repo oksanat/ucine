@@ -101,6 +101,7 @@ apiUrl                    | Backend server api
 ## TODO:
 * More unit tests
 * End to end tests
+* Responsive design
 * Deployment script
 * Support https
 * Support language templating

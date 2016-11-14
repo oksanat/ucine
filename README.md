@@ -29,7 +29,7 @@ If available:
 ## Setting up
 ### Prerequisites
 * Node.js
-* MongoDB (Installation instructions for MongoDB can be found on the Mongo website).
+* MongoDB (local or remote)
 
 ### Using setup.sh
 ```

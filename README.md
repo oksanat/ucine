@@ -1,6 +1,6 @@
 # ucine
 ## Film Locations in San Francisco
-If you love movies, and you love San Francisco, you're bound to love this. - 
+If you love movies, and you love San Francisco, you're bound to love this! 
 Search filming locations of movies shot in San Francisco starting from 1924.
 
 Feeling lucky? Why not to try "I am feeling lucky" button to find location right
@@ -67,6 +67,9 @@ boundaries.sw.lng   | Location boundaries: South West longitude
 
 
 ### TODO:
+* More unit tests
+* End to end tests
+* Deployment script
 * Support language templating
 * User Preferences
 

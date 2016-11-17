@@ -1,0 +1,11 @@
+{
+  "rules": {
+    "quotes": ["error", "double", "avoid-escape"],
+    "eqeqeq": ["error", "smart"],
+    "brace-style": ["error", "1tbs", { "allowSingleLine": true }],
+    "eol-last": "off",
+    "no-nested-ternary": "warn",
+    "padded-blocks": ["warn", "never"],
+    "space-before-blocks": ["error", "always"]
+  }
+}

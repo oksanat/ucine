@@ -1,4 +1,4 @@
-describe("MapService", function() {
+describe("MapService", function () {
 
     var $service,
         $rootScope,
@@ -17,7 +17,7 @@ describe("MapService", function() {
         $provide.value("MovieService", MovieService);
     }));
 
-    beforeEach(function(){
+    beforeEach(function() {
 
         inject(function($injector) {
             MovieService = $injector.get("MovieService");

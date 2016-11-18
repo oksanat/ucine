@@ -17,7 +17,7 @@ var google = {
                 extend: function() {}
             };
         },
-        Map: function(obj){
+        Map: function(obj) {
             return {
                 getStreetView: function () {
                     return {

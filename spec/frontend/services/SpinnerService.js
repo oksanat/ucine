@@ -1,5 +1,4 @@
 describe("SpinnerService", function() {
-
     var $service,
         $mdDialog;
 

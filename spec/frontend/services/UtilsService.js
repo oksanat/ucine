@@ -1,8 +1,7 @@
 describe("$service", function() {
-
     var $service;
 
-    beforeEach(function(){
+    beforeEach(function() {
         module("UtilsService");
         inject(function($injector) {
             $service = $injector.get("UtilsService");
@@ -10,7 +9,6 @@ describe("$service", function() {
     });
 
     describe("isNullOrUndefined", function() {
-
         it("Should return true for null value", function () {
             var result = $service.isNullOrUndefined(null);
             expect(result).toBeTruthy();
@@ -25,7 +23,6 @@ describe("$service", function() {
             var result = $service.isNullOrUndefined(1);
             expect(result).toBeFalsy();
         });
-
     });
 
     describe("isEmpty", function() {

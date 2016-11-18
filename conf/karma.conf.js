@@ -9,7 +9,7 @@ module.exports = function(config) {
             "http://maps.googleapis.com/maps/api/js?sensor=false&language=en",
             "http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js",
             "http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-mocks.js",
-            "./node_modules/phantomjs-polyfill-object-assign/object-assign-polyfill.js",
+            "../node_modules/phantomjs-polyfill-object-assign/object-assign-polyfill.js",
             "public/js/**/*.js",
             "spec/mocks/googleMapsApi.js",
             "spec/frontend/**/*.js"

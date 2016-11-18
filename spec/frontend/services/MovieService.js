@@ -1,5 +1,4 @@
 describe("MovieService", function() {
-
     var $service,
         $httpBackend,
         $rootScope,
@@ -11,8 +10,7 @@ describe("MovieService", function() {
         $provide.value("MovieModel", MovieModel);
     }));
 
-    beforeEach(function(){
-
+    beforeEach(function() {
         inject(function($injector) {
             $httpBackend = $injector.get("$httpBackend");
             $rootScope = $injector.get("$rootScope");
@@ -28,7 +26,6 @@ describe("MovieService", function() {
             }];
             $service = $injector.get("MovieService");
         });
-
     });
 
     describe("getLimits", function() {
@@ -156,5 +153,4 @@ describe("MovieService", function() {
             $httpBackend.flush();
         });
     });
-
 });

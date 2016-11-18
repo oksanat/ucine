@@ -15,7 +15,7 @@
         service.getLimits = getLimits;
 
         // Public methods
-        function search(data){
+        function search(data) {
             $log.debug("Search data: ", data);
             var where = [],
                 fieldsQuery = "",
@@ -24,7 +24,7 @@
                 params = {},
                 deferred = $q.defer();
 
-            if (!UtilsService.isNullOrUndefined(data.title)) {
+            if (!UtilsService.isNullOrUndefined(data.title)){
                 where.push(prepareWhereClause("title", data.title));
             }
             if (!UtilsService.isNullOrUndefined(data.locations)) {

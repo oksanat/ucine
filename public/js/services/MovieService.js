@@ -15,7 +15,7 @@
         service.getLimits = getLimits;
 
         // Public methods
-        function search(data) {
+        function search(data){
             $log.debug("Search data: ", data);
             var where = [],
                 fieldsQuery = "",

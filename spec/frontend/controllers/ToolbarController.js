@@ -1,5 +1,4 @@
 describe("ToolbarController", function () {
-
     var $rootScope,
         $window,
         $scope,
@@ -8,7 +7,7 @@ describe("ToolbarController", function () {
     beforeEach(function() {
         module("ToolbarController");
 
-        inject(function($injector){
+        inject(function($injector) {
             $window = $injector.get("$window");
             $rootScope = $injector.get("$rootScope");
             $scope = $rootScope.$new();
@@ -16,7 +15,6 @@ describe("ToolbarController", function () {
                 {$scope: $scope}
             );
         });
-
     });
 
     it("should open window on openSource", function () {
@@ -24,5 +22,4 @@ describe("ToolbarController", function () {
         $scope.openSource();
         expect(window.open).toHaveBeenCalled();
     });
-
 });

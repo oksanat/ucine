@@ -1,5 +1,4 @@
 describe("MapService", function () {
-
     var $service,
         $rootScope,
         $scope,
@@ -18,7 +17,6 @@ describe("MapService", function () {
     }));
 
     beforeEach(function() {
-
         inject(function($injector) {
             MovieService = $injector.get("MovieService");
             $q = $injector.get("$q");
@@ -26,7 +24,6 @@ describe("MapService", function () {
             $scope = $rootScope.$new();
             $service = $injector.get("MapService");
         });
-
     });
 
     describe("toggleStreetView", function() {
@@ -36,7 +33,6 @@ describe("MapService", function () {
     });
 
     describe("addMovies", function() {
-
         it("Should search movies and fire event on empty results", function () {
             spyOn($scope, "$emit");
             $service.addMovies($rootScope, $scope);
@@ -47,7 +43,6 @@ describe("MapService", function () {
     });
 
     describe("refresh", function() {
-
         it("Should fire show spinner event on refresh", function () {
             spyOn($scope, "$emit");
             spyOn($rootScope, "$emit");
@@ -59,5 +54,4 @@ describe("MapService", function () {
             expect($scope.$emit).toHaveBeenCalledWith("emptyResults");
         });
     });
-
 });

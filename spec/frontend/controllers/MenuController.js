@@ -1,5 +1,4 @@
 describe("MenuController", function () {
-
     var $rootScope,
         $scope,
         $controller,
@@ -20,7 +19,7 @@ describe("MenuController", function () {
             };
         });
 
-        inject(function($injector){
+        inject(function($injector) {
             $rootScope = $injector.get("$rootScope");
             $scope = $rootScope.$new();
             $controller = $injector.get("$controller")("MenuController", {
@@ -28,7 +27,6 @@ describe("MenuController", function () {
                 $mdSidenav: $mdSidenav
             });
         });
-
     });
 
     it("Should close sideNav", function () {
@@ -45,5 +43,4 @@ describe("MenuController", function () {
         $scope.toggleSidenav();
         expect(sideNavToggleMock).toHaveBeenCalled();
     });
-
 });

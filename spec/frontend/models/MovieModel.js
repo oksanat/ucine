@@ -1,9 +1,8 @@
 describe("MovieModel", function() {
-
     var $movieModel,
         $httpBackend;
 
-    beforeEach(function(){
+    beforeEach(function() {
         module("MovieModel");
         inject(function($injector) {
             $movieModel = $injector.get("MovieModel");
@@ -20,7 +19,6 @@ describe("MovieModel", function() {
     });
 
     describe("setData", function() {
-
         afterEach(function () {
             $httpBackend.flush();
             $httpBackend.verifyNoOutstandingExpectation();
@@ -66,7 +64,7 @@ describe("MovieModel", function() {
     });
 
     describe("loaGeocode", function() {
-        beforeEach(function(){
+        beforeEach(function() {
             $httpBackend
                 .when("GET", "http://127.0.0.1:8080/geocodes?address=San+Francisco")
                 .respond(200, {
@@ -77,7 +75,6 @@ describe("MovieModel", function() {
                     },
                     formattedAddress: "San Francisco, CA, USA"
                 });
-
         });
 
         afterEach(function () {
@@ -97,7 +94,6 @@ describe("MovieModel", function() {
             });
             done();
         });
-
     });
 
     describe("setGeolocation", function() {
@@ -116,5 +112,4 @@ describe("MovieModel", function() {
             expect(model.geolocation).toEqual(geolocation);
         });
     });
-
 });

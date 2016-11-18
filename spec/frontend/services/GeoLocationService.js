@@ -1,12 +1,11 @@
 describe("GeoLocationService", function() {
-
     var $service,
         $window,
         $rootScope,
         $httpBackend,
         address;
 
-    beforeEach(function(){
+    beforeEach(function() {
         module("GeoLocationService");
 
         address = {
@@ -35,7 +34,6 @@ describe("GeoLocationService", function() {
                 .respond(200, address);
             $service = $injector.get("GeoLocationService");
         });
-
     });
 
     it("Should call window.navigator.geolocation to get current position", function () {
@@ -46,7 +44,7 @@ describe("GeoLocationService", function() {
     });
 
     it("Should call addresses Api to get address", function () {
-        $service.getCurrentLocation().then(function(location){
+        $service.getCurrentLocation().then(function(location) {
             expect(location.address).toEqual(address.address);
             expect(location.coords).toEqual(address.coords);
             expect(location.formattedAddress).toEqual(address.formattedAddress);
@@ -55,5 +53,4 @@ describe("GeoLocationService", function() {
         $httpBackend.flush();
         expect($window.navigator.geolocation.getCurrentPosition).toHaveBeenCalled();
     });
-
 });

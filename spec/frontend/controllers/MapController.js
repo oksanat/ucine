@@ -1,5 +1,4 @@
 describe("MapController", function () {
-
     var $rootScope,
         $scope,
         $controller,
@@ -10,7 +9,7 @@ describe("MapController", function () {
     beforeEach(function() {
         module("MapController");
 
-        inject(function($injector){
+        inject(function($injector) {
             $rootScope = $injector.get("$rootScope");
             $scope = $rootScope.$new();
             mapService = $injector.get("MapService");
@@ -21,7 +20,6 @@ describe("MapController", function () {
                 $scope: $scope
             });
         });
-
     });
 
     it("Should call map refresh on init", function () {
@@ -29,5 +27,4 @@ describe("MapController", function () {
         $scope.init();
         expect(mapService.refresh).toHaveBeenCalled();
     });
-
 });

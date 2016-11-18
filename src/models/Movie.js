@@ -8,12 +8,10 @@
         model = new Model();
 
     var Movie = model.extend({
-
         getInfo: function(data) {
-
             var parseData = function (data) {
                 // Remove N/A
-                _.each(data, function(value, key){
+                _.each(data, function(value, key) {
                     if (value === "N/A") {
                         data[key] = null;
                     }
@@ -36,5 +34,4 @@
     });
 
     module.exports = Movie;
-
 })();

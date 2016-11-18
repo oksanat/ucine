@@ -28,7 +28,7 @@ describe("Imdb controller", function() {
     });
 
     it("Should call model getInfo to get data", function() {
-        spyOn(Model.prototype, "getInfo").andCallFake(function(){
+        spyOn(Model.prototype, "getInfo").andCallFake(function() {
             var deferred = Q.defer();
             deferred.resolve({title: "Night before Christmas", poster: "N/A"});
             return deferred.promise;
@@ -39,7 +39,7 @@ describe("Imdb controller", function() {
     });
 
     it("Should set status to 500 when request fails", function() {
-        spyOn(Model.prototype, "getInfo").andCallFake(function(){
+        spyOn(Model.prototype, "getInfo").andCallFake(function() {
             var deferred = Q.defer();
             deferred.reject("Something went wrong");
             return deferred.promise;
@@ -51,5 +51,4 @@ describe("Imdb controller", function() {
         Imdb.run(request, resource, function() {});
         expect(Model.prototype.getInfo).toHaveBeenCalled();
     });
-
 });

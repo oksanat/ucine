@@ -26,5 +26,4 @@ describe("Base view", function() {
         expect(otherViewInstance.render).toBeDefined();
         otherViewInstance.otherRender({prop: "yes"});
     });
-
 });

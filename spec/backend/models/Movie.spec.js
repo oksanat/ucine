@@ -13,7 +13,6 @@ describe("Movie Model", function() {
             name: "Night before Christmas",
             year: 1986
         };
-
     });
 
     it("Should have getInfo method", function() {
@@ -21,7 +20,7 @@ describe("Movie Model", function() {
     });
 
     it("Should call Imdb Api to get data", function() {
-        spyOn(Imdb, "getReq").andCallFake(function(){
+        spyOn(Imdb, "getReq").andCallFake(function() {
             var deferred = Q.defer();
             deferred.resolve({a: "aaa", b: "N/A"});
             return deferred.promise;
@@ -32,7 +31,7 @@ describe("Movie Model", function() {
     });
 
     it("Should set N/A fields to null", function() {
-        spyOn(Imdb, "getReq").andCallFake(function(){
+        spyOn(Imdb, "getReq").andCallFake(function() {
             var deferred = Q.defer();
             deferred.resolve({a: "aaa", b: "N/A"});
             return deferred.promise;
@@ -44,5 +43,4 @@ describe("Movie Model", function() {
             });
         expect(Imdb.getReq).toHaveBeenCalled();
     });
-
 });

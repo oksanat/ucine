@@ -15,7 +15,6 @@ describe("Geocode controller", function() {
         it("Should have reverse method", function() {
             expect(Geocode.reverse).toBeDefined();
         });
-
     });
 
     describe("Geocode checkBoundaries", function() {
@@ -42,7 +41,6 @@ describe("Geocode controller", function() {
             var result = Geocode.checkBoundaries(coordsOut);
             expect(result).toBe(false);
         });
-
     });
 
     describe("Geocode validate data", function() {
@@ -79,7 +77,6 @@ describe("Geocode controller", function() {
             var result = Geocode.validate([coordsOut]);
             expect(result).toBe(false);
         });
-
     });
 
     describe("Geocode prepareLocationObj", function() {
@@ -113,13 +110,12 @@ describe("Geocode controller", function() {
             expect(countDecimals(location.coords.latitude)).toBe(7);
             expect(countDecimals(location.coords.longitude)).toBe(7);
         });
-
     });
 
     describe("Geocode insertlocation", function() {
         it("Should call model insert to insert location", function() {
             var location = {};
-            spyOn(Model.prototype, "insert").andCallFake(function(){
+            spyOn(Model.prototype, "insert").andCallFake(function() {
                 return true;
             });
 
@@ -131,7 +127,7 @@ describe("Geocode controller", function() {
     describe("Geocode geLocation", function() {
         it("Should call model getList in order to get location", function() {
             var queryObj = {};
-            spyOn(Model.prototype, "getList").andCallFake(function(){
+            spyOn(Model.prototype, "getList").andCallFake(function() {
                 return {};
             });
 
@@ -159,7 +155,6 @@ describe("Geocode controller", function() {
         });
 
         it("Should use data from cache if exists", function() {
-
             spyOn(Model.prototype, "getList").andCallFake(function(callback) {
                 callback(null, [{address: "Lewisham High Street"}]);
             });
@@ -171,7 +166,6 @@ describe("Geocode controller", function() {
         });
 
         it("Should call geocoder.reverse if data doesn't exist", function() {
-
             var geocoder = NodeGeocoder(config.maps),
                 data = [{
                     address: "Lewisham High Street",
@@ -193,7 +187,6 @@ describe("Geocode controller", function() {
             Geocode.reverse(request, resource, function() {});
             expect(Model.prototype.getList).toHaveBeenCalled();
             expect(geocoder.reverse).toHaveBeenCalled();
-
         });
     });
 
@@ -220,7 +213,6 @@ describe("Geocode controller", function() {
         });
 
         it("Should use data from cache if exists", function() {
-
             spyOn(Model.prototype, "getList").andCallFake(function(callback) {
                 callback(null, [{address: "Lewisham High Street"}]);
             });
@@ -232,7 +224,6 @@ describe("Geocode controller", function() {
         });
 
         it("Should call geocoder.geocode if data doesn't exist", function() {
-
             var data = [{
                     address: "Lewisham High Street",
                     streetName: "High Street",

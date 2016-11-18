@@ -42,5 +42,4 @@ describe("Home controller", function() {
         Home.run();
         expect(View.prototype.render).toHaveBeenCalled();
     });
-
 });

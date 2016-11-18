@@ -42,5 +42,4 @@ describe("Geocode Model", function() {
             expect(records[0].address).toBe("Holborn, London, UK");
         }, { "address": "Holborn, London, UK" });
     });
-
 });

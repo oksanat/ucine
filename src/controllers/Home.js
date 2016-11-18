@@ -19,5 +19,4 @@
             v.render(pageModel);
         }
     });
-
 })();

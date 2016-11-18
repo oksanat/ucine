@@ -23,7 +23,5 @@
                     return next("Failed to load imdb data.");
                 });
         }
-
     });
-
 })();

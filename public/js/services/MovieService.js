@@ -15,7 +15,7 @@
         service.getLimits = getLimits;
 
         // Public methods
-        function search(data){
+        function search(data) {
             $log.debug("Search data: ", data);
             var where = [],
                 fieldsQuery = "",
@@ -45,7 +45,7 @@
                     release_year: data.year
                 });
             }
-            if (!UtilsService.isEmpty(where)){
+            if (!UtilsService.isEmpty(where)) {
                 whereQuery = where.join(" AND ");
             }
 
@@ -122,7 +122,6 @@
         }
 
         function loadMovies(params) {
-
             // Perform an AJAX call to get all of the records in the db.
             var deferred = $q.defer(),
                 httpConfig = {
@@ -154,5 +153,4 @@
 
         return service;
     }
-
 })(window.angular);

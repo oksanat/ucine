@@ -3,6 +3,7 @@ module.exports = function(config) {
 
         basePath: "../",
         frameworks: ["jasmine"],
+        //plugins:["karma-ng-html2js-preprocessor"],
         // List of files to load in the browser
         files: [
             "https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js",
@@ -11,11 +12,20 @@ module.exports = function(config) {
             "http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-mocks.js",
             "public/js/**/*.js",
             "spec/mocks/googleMapsApi.js",
-            "spec/frontend/**/*.js"
+            "spec/frontend/**/*.js",
+            "public/templates/*.html"
         ],
 
         exclude: [],
-        preprocessors: {},
+        preprocessors: {
+            // Location of templates
+            "public/templates/*.html": ["ng-html2js"]
+        },
+        ngHtml2JsPreprocessor: {
+            stripPrefix: "public",
+            // The name of the Angular module to create
+            moduleName: "templates"
+        },
         reporters: ["progress"],
         port: 9876,
         colors: true,

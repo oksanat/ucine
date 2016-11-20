@@ -120,6 +120,5 @@ describe("MapController", function () {
             expect(contents.eq(4).text()).toContain("Once upon a time...");
         });
     });
-
 });
 

@@ -19,14 +19,25 @@ module.exports = function(config) {
         exclude: [],
         preprocessors: {
             // Location of templates
-            "public/templates/*.html": ["ng-html2js"]
+            "public/templates/*.html": ["ng-html2js"],
+            "public/js/**/*.js": ["coverage"]
         },
         ngHtml2JsPreprocessor: {
             stripPrefix: "public",
             // The name of the Angular module to create
             moduleName: "templates"
         },
-        reporters: ["progress"],
+        coverageReporter: {
+            type: "html",
+            dir: "coverage",
+            watermarks: {
+                statements: [ 50, 75 ],
+                functions: [ 50, 75 ],
+                branches: [ 50, 75 ],
+                lines: [ 50, 75 ]
+            }
+        },
+        reporters: ["progress", "coverage"],
         port: 9876,
         colors: true,
         logLevel: config.LOG_INFO,

@@ -11,9 +11,9 @@ describe("ToolbarController", function () {
             $window = $injector.get("$window");
             $rootScope = $injector.get("$rootScope");
             $scope = $rootScope.$new();
-            $controller = $injector.get("$controller")("ToolbarController",
-                {$scope: $scope}
-            );
+            $controller = $injector.get("$controller")("ToolbarController", {
+                $scope: $scope
+            });
         });
     });
 

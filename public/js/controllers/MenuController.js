@@ -51,7 +51,6 @@
                 .finally(function() {
                     $rootScope.$emit("hideSpinner");
                 });
-
         };
 
         $scope.submit = function() {
@@ -75,5 +74,4 @@
             );
         };
     }
-
 })(window.angular);

@@ -55,7 +55,6 @@ describe("MenuController", function () {
     });
 
     describe("SideController", function() {
-
         beforeEach(function() {
             inject(function($injector) {
                 $rootScope = $injector.get("$rootScope");

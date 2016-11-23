@@ -52,6 +52,11 @@ describe("MenuController", function () {
             $scope.toggleSidenav();
             expect(sideNavToggleMock).toHaveBeenCalled();
         });
+
+        it("Should close side nav on closeSideNav event", function () {
+            $scope.$broadcast("closeSideNav");
+            expect(sideNavCloseMock).toHaveBeenCalled();
+        });
     });
 
     describe("SideController", function() {
@@ -107,9 +112,6 @@ describe("MenuController", function () {
                 deferred.reject("Error");
                 return deferred.promise;
             });
-            $mdDialog.show = jasmine.createSpy().and.callFake(function() {
-                return true;
-            });
 
             spyOn(mapService, "refresh");
             $scope.findNearMe();
@@ -118,5 +120,24 @@ describe("MenuController", function () {
             expect(mapService.refresh).not.toHaveBeenCalled();
             expect($rootScope.$emit).toHaveBeenCalledWith("hideSpinner");
         });
+
+        it("Should show alert on emptyResults event", function () {
+            spyOn($mdDialog, "show");
+            spyOn($mdDialog, "alert").and.callThrough();
+
+            $scope.$broadcast("emptyResults");
+            expect($mdDialog.show).toHaveBeenCalled();
+            expect($mdDialog.alert).toHaveBeenCalled();
+
+        });
+
+        it("Should emit closeSideNav event and refresh map on submit", function () {
+            spyOn($scope, "$emit");
+            spyOn(mapService, "refresh");
+            $scope.submit();
+            expect(mapService.refresh).toHaveBeenCalled();
+            expect($scope.$emit).toHaveBeenCalledWith("closeSideNav");
+        });
+
     });
 });

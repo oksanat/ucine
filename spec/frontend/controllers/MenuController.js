@@ -128,7 +128,6 @@ describe("MenuController", function () {
             $scope.$broadcast("emptyResults");
             expect($mdDialog.show).toHaveBeenCalled();
             expect($mdDialog.alert).toHaveBeenCalled();
-
         });
 
         it("Should emit closeSideNav event and refresh map on submit", function () {
@@ -138,6 +137,5 @@ describe("MenuController", function () {
             expect(mapService.refresh).toHaveBeenCalled();
             expect($scope.$emit).toHaveBeenCalledWith("closeSideNav");
         });
-
     });
 });

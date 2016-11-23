@@ -11,9 +11,7 @@ describe("MenuController", function () {
         geoLocationService,
         sideNavCloseMock = jasmine.createSpy(),
         sideNavIsOpenMock = jasmine.createSpy(),
-        sideNavToggleMock = jasmine.createSpy(),
-        mdDialogShowMock = jasmine.createSpy(),
-        mdDialogAlertMock = jasmine.createSpy();
+        sideNavToggleMock = jasmine.createSpy();
 
 
     beforeEach(function() {
@@ -57,24 +55,18 @@ describe("MenuController", function () {
     });
 
     describe("SideController", function() {
-        beforeEach(function() {
-            $mdDialog = jasmine.createSpy().and.callFake(function() {
-                return {
-                    show: mdDialogShowMock,
-                    alert: mdDialogAlertMock
-                };
-            });
 
+        beforeEach(function() {
             inject(function($injector) {
                 $rootScope = $injector.get("$rootScope");
                 $scope = $rootScope.$new();
                 $q = $injector.get("$q");
+                $mdDialog = $injector.get("$mdDialog");
                 mapService = $injector.get("MapService");
                 movieService = $injector.get("MovieService");
                 geoLocationService = $injector.get("GeoLocationService");
                 $sideController = $injector.get("$controller")("SideController", {
                     $scope: $scope,
-                    $mdDialog: $mdDialog,
                     GeoLocationService: geoLocationService
                 });
             });
@@ -103,9 +95,28 @@ describe("MenuController", function () {
             });
 
             $scope.findNearMe();
-            $scope.$apply();
+            $scope.$digest();
             expect(geoLocationService.getCurrentLocation).toHaveBeenCalled();
             expect(mapService.refresh).toHaveBeenCalled();
+            expect($rootScope.$emit).toHaveBeenCalledWith("hideSpinner");
+        });
+
+        it("Should show alert and not refresh map if failed to obtain position", function () {
+            spyOn($rootScope, "$emit");
+            spyOn(geoLocationService, "getCurrentLocation").and.callFake(function() {
+                var deferred = $q.defer();
+                deferred.reject("Error");
+                return deferred.promise;
+            });
+            $mdDialog.show = jasmine.createSpy().and.callFake(function() {
+                return true;
+            });
+
+            spyOn(mapService, "refresh");
+            $scope.findNearMe();
+            $scope.$digest();
+            expect(geoLocationService.getCurrentLocation).toHaveBeenCalled();
+            expect(mapService.refresh).not.toHaveBeenCalled();
             expect($rootScope.$emit).toHaveBeenCalledWith("hideSpinner");
         });
     });

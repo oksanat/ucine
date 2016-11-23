@@ -1,15 +1,19 @@
 module.exports = function(config) {
     config.set({
 
-        basePath: "../",
+        basePath: __dirname + "/..",
         frameworks: ["jasmine"],
         //plugins:["karma-ng-html2js-preprocessor"],
         // List of files to load in the browser
         files: [
             "https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js",
             "http://maps.googleapis.com/maps/api/js?sensor=false&language=en",
-            "http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js",
-            "http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-mocks.js",
+            "node_modules/angular/angular.js",
+            "node_modules/angular-animate/angular-animate.js",
+            "node_modules/angular-aria/angular-aria.js",
+            "node_modules/angular-material/angular-material.js",
+            "node_modules/angular-material/angular-material-mocks.js",
+            "node_modules/angular-mocks/angular-mocks.js",
             "public/js/**/*.js",
             "spec/mocks/googleMapsApi.js",
             "spec/frontend/**/*.js",

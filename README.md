@@ -99,11 +99,11 @@ apiUrl                    | Backend server api
 
 
 ## TODO:
-* More unit tests
-* End to end tests
-* Responsive design
-* Deployment script
-* Support https
-* Support language templating
-* User Preferences
+1. Increase unit test coverage up to 80%
+2. End to end tests
+3. Responsive design
+4. Deployment script
+5. Support https
+6. Support language templating
+7. User Preferences
 

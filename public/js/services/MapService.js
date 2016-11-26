@@ -53,6 +53,7 @@
         function refresh(rootScope, scope) {
             rootScope.$emit("showSpinner");
             if (UtilsService.isNullOrUndefined(map)) {
+                $log.debug("Map is undefined. Initialising");
                 initialize();
             }
             if (UtilsService.isNullOrUndefined(scope.data)) {
@@ -95,7 +96,7 @@
                                 bounds.extend(latLng);
 
                                 movie.setGeoLocation(geolocation);
-                                google.maps.event.addListener(marker, "click", function (marker, movie, infowindow){
+                                google.maps.event.addListener(marker, "click", function (marker, movie, infowindow) {
                                     return function() {
                                         infowindow.setContent(prepareContent(movie));
                                         infowindow.open(map, marker);
@@ -106,7 +107,9 @@
                                 $log.debug("Failed to obtain movie geolocation, skipping", error);
                             })
                             .finally(function() {
-                                map.fitBounds(bounds);
+                                if (!UtilsService.isNullOrUndefined(map)) {
+                                    map.fitBounds(bounds);
+                                }
                                 rootScope.$emit("hideSpinner");
                             });
                     });
@@ -117,7 +120,6 @@
                 .finally(function() {
                     markers[0].setMap(null);
                 });
-
         }
         
         function toggleStreetView(geolocation) {
@@ -125,7 +127,7 @@
                 return;
             }
             var toggle = panorama.getVisible();
-            if (toggle == false) {
+            if (toggle === false) {
                 panorama.setPosition({
                     lat: geolocation.latitude,
                     lng: geolocation.longitude
@@ -146,7 +148,5 @@
             setMapOnAll(null);
             markers = [];
         }
-
     }
-
 })(window.angular);

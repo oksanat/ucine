@@ -25,6 +25,9 @@ var google = {
                             
                         }
                     };
+                },
+                fitBounds: function (bounds) {
+                    return true;
                 }
             };
         },

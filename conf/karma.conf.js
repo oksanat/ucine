@@ -7,7 +7,6 @@ module.exports = function(config) {
         // List of files to load in the browser
         files: [
             "https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js",
-            "http://maps.googleapis.com/maps/api/js?sensor=false&language=en",
             "node_modules/angular/angular.js",
             "node_modules/angular-animate/angular-animate.js",
             "node_modules/angular-aria/angular-aria.js",
@@ -34,6 +33,22 @@ module.exports = function(config) {
         coverageReporter: {
             type: "html",
             dir: "coverage",
+            check: {
+                global: {
+                    statements: 80,
+                    branches: 80,
+                    functions: 80,
+                    lines: 80,
+                    excludes: [ ]
+                },
+                each: {
+                    statements: 50,
+                    branches: 50,
+                    functions: 50,
+                    lines: 50,
+                    excludes: [ ]
+                }
+            },
             watermarks: {
                 statements: [ 50, 75 ],
                 functions: [ 50, 75 ],

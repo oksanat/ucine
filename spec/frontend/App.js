@@ -11,15 +11,21 @@ describe("App", function () {
         });
     });
 
-    it("Should show spinner on snowSpinner event", function () {
-        spyOn(SpinnerService, "showSpinner");
-        $rootScope.$broadcast("showSpinner");
-        expect(SpinnerService.showSpinner).toHaveBeenCalled();
-    });
+    describe("run", function () {
+        it("Should show spinner on snowSpinner event", function () {
+            spyOn(SpinnerService, "showSpinner");
+            $rootScope.$broadcast("showSpinner");
+            expect(SpinnerService.showSpinner).toHaveBeenCalled();
+        });
 
-    it("Should hide spinner on hideSpinner event", function () {
-        spyOn(SpinnerService, "hideSpinner");
-        $rootScope.$broadcast("hideSpinner");
-        expect(SpinnerService.hideSpinner).toHaveBeenCalled();
+        it("Should hide spinner on hideSpinner event", function () {
+            spyOn(SpinnerService, "hideSpinner");
+            $rootScope.$broadcast("hideSpinner");
+            expect(SpinnerService.hideSpinner).toHaveBeenCalled();
+        });
+
+        it("Should capitalise the string", function () {
+            expect("hello".capitalize()).toEqual("Hello");
+        });
     });
 });

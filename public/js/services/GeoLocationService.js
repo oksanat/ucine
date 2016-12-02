@@ -11,7 +11,6 @@
         return service;
 
         function getCurrentPosition() {
-
             var deferred = $q.defer();
 
             if (!$window.navigator.geolocation) {

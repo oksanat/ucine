@@ -50,5 +50,4 @@
             SpinnerService.hideSpinner();
         });
     }
-
 })(window.angular);

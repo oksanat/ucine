@@ -2,55 +2,50 @@ describe("GeoLocationService", function() {
     var $service,
         $window,
         $rootScope,
-        $httpBackend,
-        address;
+        $q;
 
     beforeEach(function() {
         module("GeoLocationService");
-
-        address = {
-            address: "San Francisco",
-            coords: {
-                latitude: 12.3,
-                longitude: -32.1
-            },
-            formattedAddress: "San Francisco, CA, USA"
-        };
-
         inject(function($injector) {
             $window = $injector.get("$window");
             $rootScope = $injector.get("$rootScope");
-            $httpBackend = $injector.get("$httpBackend");
-
-            spyOn($window.navigator.geolocation, "getCurrentPosition").and.callFake(function() {
-                var position = {
-                    coords: address.coords
-                };
-                arguments[0](position);
-            });
-
-            $httpBackend
-                .when("GET", "http://127.0.0.1:8080/addresses?latitude=12.3&longitude=-32.1")
-                .respond(200, address);
+            $q = $injector.get("$q");
             $service = $injector.get("GeoLocationService");
         });
     });
 
-    it("Should call window.navigator.geolocation to get current position", function () {
-        $service.getCurrentLocation();
-        $rootScope.$apply();
-        $httpBackend.flush();
-        expect($window.navigator.geolocation.getCurrentPosition).toHaveBeenCalled();
+    describe("getCurrentPosition success flow", function () {
+        it("Should get current position and return position", function () {
+            var position = {
+                coords: {
+                    latitude: 12.3, longitude: -32.1
+                }
+            };
+            spyOn($window.navigator.geolocation, "getCurrentPosition").and.callFake(function(error) {
+                arguments[0](position);
+            });
+            $service.getCurrentPosition().then(function(currentPosition) {
+                expect(currentPosition).toEqual(position);
+                done();
+            }, function() {
+                done(new Error("Promise should have been resolved"));
+                done();
+            });
+        });
     });
 
-    it("Should call addresses Api to get address", function () {
-        $service.getCurrentLocation().then(function(location) {
-            expect(location.address).toEqual(address.address);
-            expect(location.coords).toEqual(address.coords);
-            expect(location.formattedAddress).toEqual(address.formattedAddress);
+    describe("getCurrentPosition failure flow", function () {
+        it("Should reject promised when failed to obtain position", function () {
+            spyOn($window.navigator.geolocation, "getCurrentPosition").and.callFake(function(error) {
+                arguments[1]("Failed to obtain current position");
+            });
+
+            $service.getCurrentPosition().then(function() {
+                done(new Error("Promise should not be resolved"));
+            }, function(reason) {
+                expect(reason).toEqual("Failed to obtain current position");
+                done();
+            });
         });
-        $rootScope.$apply();
-        $httpBackend.flush();
-        expect($window.navigator.geolocation.getCurrentPosition).toHaveBeenCalled();
     });
 });

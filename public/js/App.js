@@ -9,7 +9,7 @@
 
     angular
         .module("App", ["MapController", "MenuController", "ToolbarController",
-            "MapService", "MovieService", "GeoLocationService", "SpinnerService", "UtilsService",
+            "AddressService", "MapService", "MovieService", "GeoLocationService", "SpinnerService", "UtilsService",
             "ngMaterial"])
         .config(config)
         .run(run)

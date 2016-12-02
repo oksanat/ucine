@@ -8,7 +8,7 @@ describe("MenuController", function () {
         $q,
         mapService,
         movieService,
-        geoLocationService,
+        addressService,
         sideNavCloseMock = jasmine.createSpy(),
         sideNavIsOpenMock = jasmine.createSpy(),
         sideNavToggleMock = jasmine.createSpy();
@@ -68,10 +68,10 @@ describe("MenuController", function () {
                 $mdDialog = $injector.get("$mdDialog");
                 mapService = $injector.get("MapService");
                 movieService = $injector.get("MovieService");
-                geoLocationService = $injector.get("GeoLocationService");
+                addressService = $injector.get("AddressService");
                 $sideController = $injector.get("$controller")("SideController", {
                     $scope: $scope,
-                    GeoLocationService: geoLocationService
+                    AddressService: addressService
                 });
             });
         });
@@ -86,7 +86,7 @@ describe("MenuController", function () {
 
         it("Should obtain position, refresh map and finally emit hideSpinner event", function () {
             spyOn($rootScope, "$emit");
-            spyOn(geoLocationService, "getCurrentLocation").and.callFake(function() {
+            spyOn(addressService, "getCurrentLocation").and.callFake(function() {
                 var deferred = $q.defer();
                 deferred.resolve({
                     address: "Lewisham"
@@ -100,14 +100,14 @@ describe("MenuController", function () {
 
             $scope.findNearMe();
             $scope.$digest();
-            expect(geoLocationService.getCurrentLocation).toHaveBeenCalled();
+            expect(addressService.getCurrentLocation).toHaveBeenCalled();
             expect(mapService.refresh).toHaveBeenCalled();
             expect($rootScope.$emit).toHaveBeenCalledWith("hideSpinner");
         });
 
         it("Should show alert and not refresh map if failed to obtain position", function () {
             spyOn($rootScope, "$emit");
-            spyOn(geoLocationService, "getCurrentLocation").and.callFake(function() {
+            spyOn(addressService, "getCurrentLocation").and.callFake(function() {
                 var deferred = $q.defer();
                 deferred.reject("Error");
                 return deferred.promise;
@@ -116,7 +116,7 @@ describe("MenuController", function () {
             spyOn(mapService, "refresh");
             $scope.findNearMe();
             $scope.$digest();
-            expect(geoLocationService.getCurrentLocation).toHaveBeenCalled();
+            expect(addressService.getCurrentLocation).toHaveBeenCalled();
             expect(mapService.refresh).not.toHaveBeenCalled();
             expect($rootScope.$emit).toHaveBeenCalledWith("hideSpinner");
         });

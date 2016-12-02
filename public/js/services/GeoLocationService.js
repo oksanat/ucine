@@ -5,10 +5,9 @@
         .module("GeoLocationService", [])
         .factory("GeoLocationService", Service);
 
-    function Service($q, $http, $log, $window) {
+    function Service($q, $log, $window) {
         var service = {};
-        service.getCurrentLocation = getCurrentLocation;
-
+        service.getCurrentPosition = getCurrentPosition;
         return service;
 
         function getCurrentPosition() {
@@ -29,40 +28,7 @@
                         deferred.reject(error);
                     });
             }
-
             return deferred.promise;
         }
-
-        function getCurrentLocation() {
-            var deferred = $q.defer(),
-                url = __env.apiUrl + "/addresses";
-
-            getCurrentPosition()
-                .then(function(position) {
-                    var config = {
-                        params: {
-                            latitude: position.coords.latitude,
-                            longitude: position.coords.longitude
-                        }
-                    };
-                    $http
-                        .get(url, config)
-                        .success(function(location) {
-                            $log.debug("Obtained location", location);
-                            deferred.resolve(location);
-                        })
-                        .error(function(error) {
-                            deferred.reject(error);
-                        });
-                })
-                .catch(function(error) {
-                    $log.debug("Failed to obtain geolocation due to: ", error);
-                    deferred.reject(error);
-                });
-
-            return deferred.promise;
-        }
-
     }
-
 })(window.angular);

@@ -42,18 +42,18 @@ module.exports = function(config) {
                     excludes: [ ]
                 },
                 each: {
-                    statements: 50,
+                    statements: 60,
                     branches: 50,
-                    functions: 50,
-                    lines: 50,
+                    functions: 60,
+                    lines: 80,
                     excludes: [ ]
                 }
             },
             watermarks: {
-                statements: [ 50, 75 ],
-                functions: [ 50, 75 ],
-                branches: [ 50, 75 ],
-                lines: [ 50, 75 ]
+                statements: [ 50, 80 ],
+                functions: [ 50, 80 ],
+                branches: [ 50, 80 ],
+                lines: [ 50, 80 ]
             }
         },
         reporters: ["progress", "coverage"],

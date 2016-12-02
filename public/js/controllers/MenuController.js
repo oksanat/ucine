@@ -2,7 +2,7 @@
     "use strict";
 
     angular
-        .module("MenuController", ["MapService", "GeoLocationService", "ngMaterial"])
+        .module("MenuController", ["MapService", "AddressService", "ngMaterial"])
         .controller("MenuController", Controller)
         .controller("SideController", SideController);
 
@@ -29,7 +29,7 @@
         }
     }
 
-    function SideController($rootScope, $scope, $log, $mdDialog, MovieService, GeoLocationService, MapService) {
+    function SideController($rootScope, $scope, $log, $mdDialog, MovieService, AddressService, MapService) {
         $scope.releaseYears = MovieService.getReleaseYears();
         $scope.limits = MovieService.getLimits();
 
@@ -37,7 +37,7 @@
             $scope.$emit("closeSideNav");
             $rootScope.$emit("showSpinner");
 
-            GeoLocationService.getCurrentLocation()
+            AddressService.getCurrentLocation()
                 .then(function(location) {
                     $scope.data = {
                         locations: location.address

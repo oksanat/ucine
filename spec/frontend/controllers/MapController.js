@@ -119,6 +119,36 @@ describe("MapController", function () {
             expect(contents.eq(3).text()).toContain("102 California");
             expect(contents.eq(4).text()).toContain("Once upon a time...");
         });
+
+        it("Should open imdburl link in new tab", function() {
+            spyOn(window, "open");
+            $scope.movie = {
+                imdburl: "http://anything.com"
+            }
+            $scope.$digest();
+            element.find(".imdb").triggerHandler("click");
+            expect(window.open).toHaveBeenCalledWith("http://anything.com", "_blank");
+        });
+
+        it("Should open poster link in new tab", function() {
+            spyOn(window, "open");
+            $scope.movie = {
+                poster: "http://poster.com"
+            }
+            $scope.$digest();
+            element.find(".poster").triggerHandler("click");
+            expect(window.open).toHaveBeenCalledWith("http://poster.com", "_blank");
+        });
+
+        it("Should call MapService to toggle street view", function() {
+            spyOn(mapService, "toggleStreetView");
+            $scope.movie = {
+                geolocation: "Mocked"
+            }
+            $scope.$digest();
+            element.find(".streetview").triggerHandler("click");
+            expect(mapService.toggleStreetView).toHaveBeenCalledWith("Mocked");
+        });
     });
 });
 

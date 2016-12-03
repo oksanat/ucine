@@ -4,26 +4,32 @@ var google = {
         },
         Marker : function () {
             return {
-                setMap: function() {}
+                setMap: function () {}
+            };
+        },
+        Animation: function () {
+            return {
+                DROP: 2
             };
         },
         InfoWindow : function () {
         },
-        LatLng: function(lat, lng) {
+        LatLng: function (lat, lng) {
             return [lat, lng];
         },
-        LatLngBounds: function(sw, ne) {
+        LatLngBounds: function (sw, ne) {
             return {
                 extend: function() {}
             };
         },
-        Map: function(obj) {
+        event: {
+            addListener: function () {}
+        },
+        Map: function (obj) {
             return {
                 getStreetView: function () {
                     return {
-                        setOptions: function () {
-                            
-                        }
+                        setOptions: function () {}
                     };
                 },
                 fitBounds: function (bounds) {

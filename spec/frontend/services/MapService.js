@@ -95,6 +95,35 @@ describe("MapService", function () {
             expect(MovieService.search).toHaveBeenCalled();
             expect($rootScope.$emit).toHaveBeenCalledWith("hideSpinner");
         });
+
+        it("Should load geocode for movie", function () {
+            var movie = {
+                title: "Forgotten",
+                locations: "102 Building",
+                loadGeocode: jasmine.createSpy().and.callFake(function() {
+                    var deferred = $q.defer();
+                    deferred.resolve({
+                        coords: {
+                            latitude: 12.3,
+                            longitude: -32.1
+                        }
+                    });
+                    return deferred.promise;
+                }),
+                setGeoLocation: jasmine.createSpy()
+            };
+
+            MovieService.search = jasmine.createSpy().and.callFake(function() {
+                var deferred = $q.defer();
+                deferred.resolve([movie]);
+                return deferred.promise;
+            });
+
+            $service.addMovies($rootScope, $scope);
+            $rootScope.$apply();
+            expect(MovieService.search).toHaveBeenCalled();
+            expect(movie.setGeoLocation).toHaveBeenCalled();
+        });
     });
 
     describe("refresh", function() {

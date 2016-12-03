@@ -18,7 +18,8 @@ describe("GeoLocationService", function() {
         it("Should get current position and return position", function () {
             var position = {
                 coords: {
-                    latitude: 12.3, longitude: -32.1
+                    latitude: 12.3,
+                    longitude: -32.1
                 }
             };
             spyOn($window.navigator.geolocation, "getCurrentPosition").and.callFake(function(error) {

@@ -129,8 +129,8 @@
             var toggle = panorama.getVisible();
             if (toggle === false) {
                 panorama.setPosition({
-                    lat: geolocation.latitude,
-                    lng: geolocation.longitude
+                    lat: parseFloat(geolocation.coords.latitude),
+                    lng: parseFloat(geolocation.coords.longitude)
                 });
                 panorama.setVisible(true);
             } else {

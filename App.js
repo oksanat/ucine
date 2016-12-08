@@ -23,7 +23,6 @@ MongoClient.connect("mongodb://" + config.mongodb.host + ":" + config.mongodb.po
     if (err) {
         console.error("Failed to connect to mongodb due to ", err);
     } else {
-
         var attachDb = function(req, res, next) {
                 req.db = db;
                 next();
@@ -52,7 +51,6 @@ MongoClient.connect("mongodb://" + config.mongodb.host + ":" + config.mongodb.po
                     }
                 };
                 res.status(res.statusCode).send(error);
-
             };
 
         app.get("/", attachDb, function(req, res, next) {

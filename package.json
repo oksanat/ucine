@@ -13,13 +13,14 @@
   "license": "Unlicense",
   "dependencies": {
     "express": "~4.14.0",
-    "mongodb": "~2.2.11",
-    "underscore": "~1.8.3",
-    "pug": "2.0.0-beta6",
-    "serve-favicon": "~2.3.0",
-    "node-geocoder": "~3.14.0",
+    "express-accepts": "^0.1.0",
     "imdb-api": "~2.2.0",
-    "q": "~2.0.3"
+    "mongodb": "~2.2.11",
+    "node-geocoder": "~3.14.0",
+    "pug": "2.0.0-beta6",
+    "q": "~2.0.3",
+    "serve-favicon": "~2.3.0",
+    "underscore": "~1.8.3"
   },
   "devDependencies": {
     "angular": "^1.5.8",

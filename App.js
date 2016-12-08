@@ -2,6 +2,7 @@
  * Module dependencies.
  */
 var express = require("express"),
+    accepts = require("express-accepts"),
     http = require("http"),
     path = require("path"),
     config = require("./config")(),
@@ -54,21 +55,30 @@ MongoClient.connect("mongodb://" + config.mongodb.host + ":" + config.mongodb.po
 
             };
 
-        app.all("/", attachDb, function(req, res, next) {
+        app.get("/", attachDb, function(req, res, next) {
             Home.run(req, res, next);
         });
 
-        app.get("/geocodes", checkRequiredParam(["address"]), attachDb, attachGeocoder, function(req, res, next) {
-            Geocode.geocode(req, res, next);
-        });
+        app.get("/geocodes", accepts("application/json"),
+            checkRequiredParam(["address"]), attachDb, attachGeocoder,
+            function(req, res, next) {
+                Geocode.geocode(req, res, next);
+            }
+        );
 
-        app.get("/addresses", checkRequiredParam(["latitude", "longitude"]), attachDb, attachGeocoder, function(req, res, next) {
-            Geocode.reverse(req, res, next);
-        });
+        app.get("/addresses", accepts("application/json"),
+            checkRequiredParam(["latitude", "longitude"]), attachDb, attachGeocoder,
+            function(req, res, next) {
+                Geocode.reverse(req, res, next);
+            }
+        );
 
-        app.get("/imdb", checkRequiredParam(["name", "year"]), attachDb, function(req, res, next) {
-            Imdb.run(req, res, next);
-        });
+        app.get("/imdb", accepts("application/json"),
+            checkRequiredParam(["name", "year"]), attachDb,
+            function(req, res, next) {
+                Imdb.run(req, res, next);
+            }
+        );
 
         app.use(errorHandler);
 

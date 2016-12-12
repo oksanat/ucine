@@ -9,6 +9,7 @@ var express = require("express"),
     app = express(),
     favicon = require("serve-favicon");
     Home = require("./src/controllers/Home"),
+    Presentation = require("./src/controllers/Presentation"),
     Geocode = require("./src/controllers/Geocode"),
     Imdb = require("./src/controllers/Imdb"),
     MongoClient = require("mongodb").MongoClient,
@@ -55,6 +56,10 @@ MongoClient.connect("mongodb://" + config.mongodb.host + ":" + config.mongodb.po
 
         app.get("/", attachDb, function(req, res, next) {
             Home.run(req, res, next);
+        });
+
+        app.get("/presentation", function(req, res, next) {
+            Presentation.run(req, res, next);
         });
 
         app.get("/geocodes", accepts("application/json"),

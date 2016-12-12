@@ -124,7 +124,7 @@ describe("MapController", function () {
             spyOn(window, "open");
             $scope.movie = {
                 imdburl: "http://anything.com"
-            }
+            };
             $scope.$digest();
             element.find(".imdb").triggerHandler("click");
             expect(window.open).toHaveBeenCalledWith("http://anything.com", "_blank");
@@ -134,7 +134,7 @@ describe("MapController", function () {
             spyOn(window, "open");
             $scope.movie = {
                 poster: "http://poster.com"
-            }
+            };
             $scope.$digest();
             element.find(".poster").triggerHandler("click");
             expect(window.open).toHaveBeenCalledWith("http://poster.com", "_blank");
@@ -144,7 +144,7 @@ describe("MapController", function () {
             spyOn(mapService, "toggleStreetView");
             $scope.movie = {
                 geolocation: "Mocked"
-            }
+            };
             $scope.$digest();
             element.find(".streetview").triggerHandler("click");
             expect(mapService.toggleStreetView).toHaveBeenCalledWith("Mocked");

@@ -34,7 +34,5 @@
             $mdDialog.cancel();
             shown = false;
         }
-
     }
-
 })(window.angular);

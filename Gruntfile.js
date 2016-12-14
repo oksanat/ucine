@@ -15,7 +15,7 @@ module.exports = function(grunt) {
             options: {
                 configFile: "conf/eslint.json"
             },
-            target: ["src/**/*.js", "spec/**/*.js"]
+            target: ["src/**/*.js", "public/**/*.js", "spec/**/*.js"]
         },
         karma: {
             unit: {

@@ -6,7 +6,6 @@
         .factory("MovieModel", Model);
 
     function Model ($http, $q, $window) {
-
         function Movie(data) {
             this.setData(data);
         };
@@ -85,5 +84,4 @@
         };
         return Movie;
     }
-
 })(window.angular);

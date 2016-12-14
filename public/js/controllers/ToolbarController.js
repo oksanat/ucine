@@ -10,5 +10,4 @@
             $window.open($window.__env.gitRepo, "_blank");
         }
     }
-
 })(window.angular);

@@ -4,10 +4,9 @@
     angular
         .module("MapController", ["MapService"])
         .controller("MapController", Controller)
-        .directive("movieInfo", Directive)
+        .directive("movieInfo", Directive);
 
     function Controller($rootScope, $scope, MapService) {
-
         angular.element(document).ready(function () {
             $scope.init();
         });
@@ -37,5 +36,4 @@
             templateUrl: "/templates/movieInfo.html"
         };
     }
-
 })(window.angular);

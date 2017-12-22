@@ -106,4 +106,4 @@ apiUrl                    | Backend server api
 5. Support https
 6. Support language templating
 7. User preferences
-
+8. 

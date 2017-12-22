@@ -105,5 +105,5 @@ apiUrl                    | Backend server api
 4. Deployment script
 5. Support https
 6. Support language templating
-7. User Preferences
+7. User preferences
 

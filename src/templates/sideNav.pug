@@ -32,8 +32,8 @@ md-sidenav(class="md-sidenav-right" md-component-id="sideNav" id="sideNav")
                     md-select(ng-model="data.limit")
                         md-option(ng-value="limit" ng-repeat="limit in limits" ng-selected="$first") {{ limit }}
 
-            md-checkbox(flex ng-model="data.funFacts" aria-label="Interesting facts")
-                label Interesting facts
+            md-checkbox(flex ng-model="data.funFacts" aria-label="Interesting facts?")
+                label Interesting facts?
 
             div(flex layout="row" layout-align="start center")
                 md-button(type="submit" class="md-primary") Search
